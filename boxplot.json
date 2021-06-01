@@ -1,3 +1,43 @@
 {
-  
+  "id": "boxplot",
+  "version": "0.1.0",
+  "name": "boxplot",
+  "description": "A custom box plot widget",
+  "newInstancePrefix": "boxplot",
+  "icon": "https://static.thenounproject.com/png/115580-200.png",
+  "vendor": "pwc-cz-ras",
+  "eula": "",
+  "license": "",
+  "webcomponents": [
+    {
+			"kind": "main",
+			"tag": "boxplot",
+            "url": "https://sacwidgethost.z6.web.core.windows.net/boxplot.js",
+            "integrity": "",
+            "ignoreIntegrity" : true
+        },
+		{
+			"kind": "styling",
+			"tag": "boxplot_styling",
+            "url": "https://sacwidgethost.z6.web.core.windows.net/boxplot_styling.js",
+            "integrity": "",
+            "ignoreIntegrity" : true
+        },
+		{
+			"kind": "builder",
+			"tag": "boxplot_builder",
+            "url": "https://sacwidgethost.z6.web.core.windows.net/boxplot_builder.js",
+            "integrity": "",
+            "ignoreIntegrity" : true
+        }
+    ],
+	"properties": {
+		
+	},
+	"methods": {
+		
+	},
+	"events": {
+    
+	}
 }
