@@ -6,6 +6,7 @@
 		constructor() {
 			super();
 			console.log("abcd");
+			this.data.x = "Data";
 			this.recalculate();
 			//TODO: understand what shadow DOMs do and how they can benefit here
 		}
@@ -42,16 +43,18 @@
 		}
 		
 		recalculate() {
-			this.data.low = Math.min.apply(Math, this._values);
-			this.data.median = this.getMedian(this._values);
-			this.data.high = Math.max.apply(Math, this._values);
-			this.data.q1 = this.getMedian(this._values.slice(0, this._values.length / 2));
-			this.data.q3 = 0;
+			const toAdd = {low: 0, q1: 0, median: 0, q3: 0, high: 0};
+			toAdd.low = Math.min.apply(Math, this._values);
+			toAdd.q1 = this.getMedian(this._values.slice(0, this._values.length / 2));
+			toAdd.median = this.getMedian(this._values);
+			toAdd.q3 = 0;
 			if(this._values.length % 2 === 0) {
-				this.data.q3 = this.getMedian(this._values.slice(this._values.length / 2));
+				toAdd.q3 = this.getMedian(this._values.slice(this._values.length / 2));
 			} else {
-				this.data.q3 = this.getMedian(this._values.slice(this._values.length / 2 + 1));
+				toAdd.q3 = this.getMedian(this._values.slice(this._values.length / 2 + 1));
 			}
+			toAdd.high = Math.max.apply(Math, this._values);
+			this.data.push(toAdd);
 		}
 
 	}
