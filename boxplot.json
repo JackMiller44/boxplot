@@ -32,10 +32,6 @@
         }
     ],
 	"properties": {
-		"values": {
-            "type": "number[]",
-            "default": [0, 25, 50, 75, 100]
-        }
 	},
 	"methods": {
 		"addValue": {
