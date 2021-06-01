@@ -1,15 +1,15 @@
 {
-  "id": "boxplot",
-  "version": "0.1.0",
-  "name": "boxplot",
-  "description": "A custom box plot widget",
-  "newInstancePrefix": "boxplot",
-  "icon": "https://static.thenounproject.com/png/115580-200.png",
-  "vendor": "pwc-cz-ras",
-  "eula": "",
-  "license": "",
-  "webcomponents": [
-    {
+    "id": "boxplot",
+    "version": "0.1.0",
+    "name": "boxplot",
+    "description": "A custom box plot widget",
+    "newInstancePrefix": "boxplot",
+    "icon": "https://static.thenounproject.com/png/115580-200.png",
+    "vendor": "pwc-cz-ras",
+    "eula": "",
+    "license": "",
+    "webcomponents": [
+        {
 			"kind": "main",
 			"tag": "boxplot",
             "url": "https://sacwidgethost.z6.web.core.windows.net/boxplot.js",
@@ -32,10 +32,34 @@
         }
     ],
 	"properties": {
-		
+		"values": {
+            "type": "number[]",
+            "default": [0.0, 50.0, 100.0]
+        }
 	},
 	"methods": {
-		
+		"addValue": {
+            "description": "Add a value",
+            "parameters": [
+                {
+                    "name": "val",
+                    "type": "number",
+                    "description": "value to be added"
+            
+                }
+            ]
+        },
+
+        "removeValue": {
+            "description": "Remove a value",
+            "parameters": [
+                {
+                    "name": "val",
+                    "type": "number",
+                    "description": "if value exists, then delete from values"
+                }
+            ]
+        }
 	},
 	"events": {
     
