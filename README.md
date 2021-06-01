@@ -1,5 +1,5 @@
 # BoxPlot
-Custom widget for SAP Analytics Cloud
+Custom widget for SAP Analytics Cloud                                         
 Authors: Jack Miller, Brandon Kondis, and Matthew Piriya
 
 # Introduction 
