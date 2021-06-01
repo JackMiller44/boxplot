@@ -1,33 +1,22 @@
 (function() {
-	let template = document.createElement("template");
-	template.innerHTML = `
-	
-	`; //TODO: Put border radius, other styling stuff here
-
 	class BoxPlot extends HTMLElement {
-		chart = anychart.box();
+		_defaultValues = [0, 25, 50, 75, 100];
+		_values = this._defaultValues;
+		data = [];
 		constructor() {
 			super();
-			var data = [
-				{x:"Data", low: this.low, q1: this.q1, median: this.median, q3: this.q3, high: this.high}
-			];
-			// create a box series and set the data
-			series = chart.box(data);
-
-			// set the container id
-			chart.container("boxplot");
-
-			// initiate drawing the chart
-			chart.draw();
+			console.log("abcd");
+			this.recalculate();
 			//TODO: understand what shadow DOMs do and how they can benefit here
 		}
 
-		onCustomWidgetAfterUpdate(oChangedProperties) {
+		conectedCallback() {
 			//TODO: figure out how to update the boxplot HTML after we add values
+			
 		}
 
-		get values() {
-			return this._values();
+		get getvalues() {
+			return this._values;
 		}
 
 		addValue(val) {
@@ -41,31 +30,31 @@
 				this.recalculate();
 			}
 		}
-		
-		recalculate() {
-			low = Math.min(_values);
-			median = getMedian(_values);
-			high = Math.max(_values);
-			q1 = getMedian(_values.slice(0, _values.length / 2));
-			q3 = 0;
-			if(_values.length % 2 === 0) {
-				q3 = getMedian(_values.slice(_values.length / 2));
-			} else {
-				q3 = getMedian(_values.slice(_values.length / 2 + 1));
-			}
-			this.chart.draw();
-		}
 
 		getMedian(arr) {
 			if(arr.length % 2 === 0) {
-				val1 = arr[arr.length / 2];
-				val2 = arr[(arr.length / 2) - 1];
+				const val1 = arr[arr.length / 2];
+				const val2 = arr[(arr.length / 2) - 1];
 				return (val1 + val2) / 2.0;
 			} else {
 				return arr[Math.floor(arr.length / 2)];
 			}
 		}
+		
+		recalculate() {
+			this.data.low = Math.min.apply(Math, this._values);
+			this.data.median = this.getMedian(this._values);
+			this.data.high = Math.max.apply(Math, this._values);
+			this.data.q1 = this.getMedian(this._values.slice(0, this._values.length / 2));
+			this.data.q3 = 0;
+			if(this._values.length % 2 === 0) {
+				this.data.q3 = this.getMedian(this._values.slice(this._values.length / 2));
+			} else {
+				this.data.q3 = this.getMedian(this._values.slice(this._values.length / 2 + 1));
+			}
+		}
+
 	}
 
-	customElements.define('boxplot', BoxPlot);
-})
+	customElements.define('boxplot-practice', BoxPlot);
+})();

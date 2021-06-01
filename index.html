@@ -7,13 +7,33 @@
   </head>
   <body>
     <div id="arc0"></div>
-      <boxplot id="boxplot">hjkilosdgfhjklasdfjklsdf</boxplot>
+      <boxplot-practice id="boxplot">hjkilosdgfhjklasdfjklsdf</boxplot-practice>
       <hr>
       <boxplot_builder id="boxplot_builder"></boxplot_builder>
-    <script src="boxplot.js" onload="loaded=true;"></script>
-    <script src="boxplot_builder.js"></script>
+
     <script src="https://cdn.anychart.com/releases/8.10.0/js/anychart-core.min.js"></script>
     <script src="https://cdn.anychart.com/releases/8.10.0/js/anychart-cartesian.min.js"></script>
+    <script src="boxplot.js" onload="loaded=true;"></script>
+    <script src="boxplot_builder.js"></script>
+    
     <script>if(loaded) {console.log("boxplot.js compiles");}</script>
+    <script>
+      const box = document.querySelector('#boxplot');
+      anychart.onDocumentReady(function () {
+        var chart = anychart.box();
+
+        // create a box series and set the data
+        series = chart.box(box.data);
+
+        // set the chart title
+        var title = chart.title("stupid shit");
+        
+        // set the containder id
+        chart.container("boxplot");
+        
+        // initiate drawing the chart
+        chart.draw();
+      });
+    </script>
   </body>
 </html>
