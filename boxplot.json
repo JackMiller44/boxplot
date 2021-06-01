@@ -34,7 +34,7 @@
 	"properties": {
 		"values": {
             "type": "number[]",
-            "default": [0.0, 50.0, 100.0]
+            "default": [0, 25, 50, 75, 100]
         }
 	},
 	"methods": {
