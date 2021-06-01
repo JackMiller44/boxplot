@@ -3,15 +3,17 @@
   <head>
     <meta charset="utf-8">
     <title>Box Plot</title>
+    <script>var loaded = false;</script>
   </head>
   <body>
     <div id="arc0"></div>
-      <boxplot id="boxplot"></boxplot>
+      <boxplot id="boxplot">hjkilosdgfhjklasdfjklsdf</boxplot>
       <hr>
       <boxplot_builder id="boxplot_builder"></boxplot_builder>
-    <script src="boxplot.js"></script>
+    <script src="boxplot.js" onload="loaded=true;"></script>
     <script src="boxplot_builder.js"></script>
     <script src="https://cdn.anychart.com/releases/8.10.0/js/anychart-core.min.js"></script>
     <script src="https://cdn.anychart.com/releases/8.10.0/js/anychart-cartesian.min.js"></script>
+    <script>if(loaded) {console.log("boxplot.js compiles");}</script>
   </body>
 </html>

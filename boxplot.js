@@ -15,7 +15,7 @@
 			series = chart.box(data);
 
 			// set the container id
-			chart.container("container");
+			chart.container("boxplot");
 
 			// initiate drawing the chart
 			chart.draw();
@@ -66,4 +66,6 @@
 			}
 		}
 	}
+
+	customElements.define('boxplot', BoxPlot);
 })
