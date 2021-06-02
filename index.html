@@ -6,32 +6,18 @@
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    <boxplot-practice id="boxplot">bdsfsdfsdfsdfsdfsdfsdfssdfsdfsdfdfssdfsdffsdsdfsdfsdfsdffsddfdfssdfoing</boxplot-practice>
+    <boxplot-practice id="boxplot"></boxplot-practice>
     <hr>
+    <!--TODO: add styling-->
+    <label>Add data point: <input id="addPoint" type="number" value="0"></label>
+    <button id="addButton" onclick="addData()">Add point!</button>
+    <label>Remove data point: <input id="removePoint" type="number" value="0"></label>
+    <button id="removeButton" onclick="removeData()">Remove point!</button>
     <boxplot_builder id="boxplot_builder"></boxplot_builder>
 
     <script src="https://cdn.anychart.com/releases/8.10.0/js/anychart-core.min.js"></script>
     <script src="https://cdn.anychart.com/releases/8.10.0/js/anychart-cartesian.min.js"></script>
     <script src="boxplot.js"></script>
     <script src="boxplot_builder.js"></script>
-    
-    <script>
-      const box = document.querySelector('#boxplot');
-      anychart.onDocumentReady(function () {
-        var chart = anychart.box();
-
-        // create a box series and set the data
-        series = chart.box(box.data);
-
-        // set the chart title
-        var title = chart.title("nice boxplot");
-        
-        // set the containder id
-        chart.container("boxplot");
-        
-        // initiate drawing the chart
-        chart.draw();
-      });
-    </script>
   </body>
 </html>
