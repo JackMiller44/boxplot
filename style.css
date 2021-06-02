@@ -1,10 +1,18 @@
-html, body, #boxplot {
+html, body{
 	display: block;
 	position: relative;
 	width: 100%;
 	height: 100%;
 	margin: 0;
 	padding: 0;
+}
+#boxplot {
+	display: block;
+	position: relative;
+	width:40%;
+	height: 85%;
+	margin:0;
+	padding:0;
 }
 button {
     margin: 10px 5px 10px 10px;
