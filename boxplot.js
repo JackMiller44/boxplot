@@ -1,19 +1,15 @@
 (function() {
 	class BoxPlot extends HTMLElement {
-		_defaultValues = [0, 25, 50, 75, 100, 200];
+		_defaultValues = [0, 25, 50, 75, 100, 400];
 		_values = this._defaultValues;
 		_outliers = false;
 		_showArms = false;
 		data = [];
-		points = [69, 420];
+		points = [120, 420];
 		constructor() {
 			super();
 			this.recalculate();
 			//TODO: understand what shadow DOMs do and how they can benefit here
-		}
-
-		conectedCallback() {
-			
 		}
 
 		get values() {
@@ -80,7 +76,14 @@
 
 			if(this._outliers) {
 				const iqr = (toAdd.q3 - toAdd.q1) * 1.5;
-				const lmao = this._values.filter((element) => {element < toAdd.q1 - iqr || element > toAdd.q3 + iqr});
+				if (!(toAdd.high <= toAdd.q3+iqr)){
+					toAdd.high = toAdd.q3+iqr;
+				}
+				if (!(toAdd.low >= toAdd.q1-iqr)){
+					toAdd.low = toAdd.q1-iqr;
+				}
+				const lmao = this._values.filter(element => ((element < toAdd.low) || (element > toAdd.high)));
+				console.log(lmao);
 				toAdd.outliers = lmao;
 			}
 			
@@ -95,9 +98,33 @@
 
 const box = document.querySelector('#boxplot');
 
+function createBox(){
+	chart.removeSeriesAt(1);
+	series = chart.box(box.data);
+	series.normal().fill("#0077ff", 0.6);
+	series.hovered().fill("#0077ff", 0.2);
+	series.selected().fill("#0077ff", 0.8);
+	series.normal().stroke("##0313fc", 1, "10 5", "round");
+	series.hovered().stroke("##0313fc", 2, "10 5", "round");
+	series.selected().stroke("##0313fc", 4, "10 5", "round");
+	series.whiskerWidth(5);
+	series.whiskerStroke({color: '#4680ac', thickness: 5});
+
+	series.xPointPosition(0.5);
+}
+
 anychart.onDocumentReady(function () {
 	chart = anychart.box();
 
+	series2 = chart.box([{x: "Sample Data", low: 0, q1:0, median:0, q3:0, high:0, outliers: box.points}]);
+	series2.normal().fill("#ff0000", 0.6);
+	series2.normal().stroke({thickness:0});
+	series2.hovered().stroke({thickness:0});
+	series2.selected().stroke({thickness:0});
+	series2.medianStroke({thickness:0});
+	series2.tooltip(false);
+	series2.xPointPosition(0.5);
+	
 	// create a box series and set the data
 	series = chart.box(box.data);
 	series.normal().fill("#0077ff", 0.6);
@@ -111,14 +138,6 @@ anychart.onDocumentReady(function () {
 
 	series.xPointPosition(0.5);
 	
-	series2 = chart.box([{x: "Sample Data", low: 0, q1:0, median:0, q3:0, high:0, outliers: box.points}]);
-	series2.normal().fill("#ff0000", 0.6);
-	series2.normal().stroke({thickness:0});
-	series2.hovered().stroke({thickness:0});
-	series2.selected().stroke({thickness:0});
-	series2.medianStroke({thickness:0});
-	series2.tooltip(false);
-	series2.xPointPosition(0.5);
 	// set the chart title
 	var title = chart.title("Sample Box Plot");
 
@@ -132,14 +151,12 @@ anychart.onDocumentReady(function () {
 function addData() {
 	var toAdd = document.getElementById("addPoint");
 	box.addValue(parseInt(toAdd.value));
-	chart.removeSeriesAt(0);
-	series = chart.box(box.data);
+	createBox();
 }
 
 function removeData() {
 	box.removeValue(parseInt(document.getElementById("removePoint").value));
-	chart.removeSeriesAt(0);
-	series = chart.box(box.data);
+	createBox();
 }
 
 function changeOrientation() {
@@ -147,10 +164,9 @@ function changeOrientation() {
 }
 
 function toggleOutliers() {
-	box.outliers = !box.outliers;
+	box._outliers = !box._outliers;
 	box.recalculate();
-	chart.removeSeriesAt(0);
-	series = chart.box(box.data);
+	createBox();
 }
 
 function toggleArms() {
