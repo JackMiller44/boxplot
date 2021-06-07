@@ -9,6 +9,7 @@ html, body{
 #boxplot {
 	display: block;
 	position: relative;
+	left: 120px;
 	width:40%;
 	height: 85%;
 	margin:0;
@@ -16,11 +17,42 @@ html, body{
 }
 button {
     margin: 10px 5px 10px 10px;
+	color: white;
+	background-color: #0077ff79;
+	padding: 5px;
+	border-radius: 4px;
+	border: 2px solid #0077ff;
+	box-shadow: 0 3px #666;
+}
+button:hover {
+    margin: 10px 5px 10px 10px;
+	color: white;
+	background-color: #0077ffbb;
+	padding: 5px;
+	border-radius: 4px;
+	border: 2px solid #0077ff;
+	box-shadow: 0 3px #666;
+}
+button:active {
+    margin: 10px 5px 10px 10px;
+	color: white;
+	background-color: #0077ffbb;
+	padding: 5px;
+	border-radius: 4px;
+	border: 2px solid #0077ff;
+	box-shadow: 0 1px #666;
+	transform: translateY(2px);
 }
 label {
     margin: 10px 5px 10px 10px;
+	padding: 5px;
+	border-radius: 4px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bolder;
 }
 input {
     width: 65px;
     margin: 10px 5px 10px 10px;
+	padding: 5px;
+	border-radius: 4px;
 }

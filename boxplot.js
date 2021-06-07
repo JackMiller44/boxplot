@@ -42,7 +42,7 @@
 		recalculate() {
 			this._values.sort(function(a, b) {return a-b});
 
-			const toAdd = {x: "", low: 0, q1: 0, median: 0, q3: 0, high: 0};
+			const toAdd = {x: "Sample Data", low: 0, q1: 0, median: 0, q3: 0, high: 0};
 
 			toAdd.low = Math.min.apply(Math, this._values);
 			toAdd.q1 = this.getMedian(this._values.slice(0, this._values.length / 2));
@@ -71,9 +71,15 @@ anychart.onDocumentReady(function () {
 
 	// create a box series and set the data
 	series = chart.box(box.data);
+	series.normal().fill("#0077ff", 0.6);
+	series.hovered().fill("#0077ff", 0.2);
+	series.selected().fill("#0077ff", 0.8);
+	series.normal().stroke("##0313fc", 1, "10 5", "round");
+	series.hovered().stroke("##0313fc", 2, "10 5", "round");
+	series.selected().stroke("##0313fc", 4, "10 5", "round");
 
 	// set the chart title
-	var title = chart.title("nice boxplot");
+	var title = chart.title("Sample Box Plot");
 
 	// set the containder id
 	chart.container("boxplot");
