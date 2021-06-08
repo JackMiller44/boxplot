@@ -50,11 +50,16 @@ label {
 	font-family: Arial, Helvetica, sans-serif;
 	font-weight: bolder;
 }
-input {
+input, select {
     width: 65px;
     margin: 10px 5px 10px 10px;
 	padding: 5px;
 	border-radius: 4px;
+}
+select {
+	position: relative;
+	left: 10px;
+	width: 150px;
 }
 #addPlot, #removePlot {
 	width: 100px;

@@ -25,8 +25,12 @@
 
     <br>
 
-    <label>Add point: <input id="addPoint" type="number" value="0"></label>
+    <label>Add reference point: <input id="addPoint" type="number" value="0"></label>
     <button id="addPointButton" onclick="addPoint()">Add!</button>
+    <boxplot_builder id="boxplot_builder"></boxplot_builder>
+
+    <label>Remove reference point: <input id="remPoint" type="number" value="0"></label>
+    <button id="removePointButton" onclick="removePoint()">Remove!</button>
     <boxplot_builder id="boxplot_builder"></boxplot_builder>
 
     <button id="changeO" onclick="changeOrientation()">Flip chart</button>

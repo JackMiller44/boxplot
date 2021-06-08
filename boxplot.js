@@ -34,10 +34,6 @@
 			this.recalculate(index);
 		}
 
-		removePlot(name) {
-
-		}
-
 		//adds value to the dataset of boxplot at index index
 		addValue(val, index) {
 			this._values[index].push(val);
@@ -220,7 +216,7 @@ function addPoint() {
 
 function removePoint() {
 	let index = document.getElementById('addDP').selectedIndex
-	let toRemove = parseInt(document.getElementById("addPoint").value);
+	let toRemove = parseInt(document.getElementById("remPoint").value);
 	let newPoints = box.points[index].filter(element => element != toRemove);
 	box.points[index] = newPoints;
 	rebuildPlot();
