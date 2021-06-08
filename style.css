@@ -56,3 +56,6 @@ input {
 	padding: 5px;
 	border-radius: 4px;
 }
+#addPlot, #removePlot {
+	width: 100px;
+}

@@ -8,14 +8,27 @@
   <body>
     <boxplot-practice id="boxplot"></boxplot-practice>
     <!--TODO: add styling-->
-    <label>Add data point: <input id="addData" type="number" value="0"></label>
+    <label>Add box plot: <input id="addPlot" type="text" value="Sample Data 2"></label>
+    <button id="addPlotButton" onclick="addBox(document.getElementById('addPlot').value)">Add!</button>
+
+    <label>Remove box plot: <input id="removePlot" type="text" value="Sample Data"></label>
+    <button id="remPlotButton" onclick="removePlot(document.getElementById('removePlot').value)">Remove!</button>
+
+    <br>
+
+    <label>Add data point: <select id="addDP"></select> <input id="addData" type="number" value="0"></label>
     <button id="addButton" onclick="addData()">Add!</button>
+
     <label>Remove data point: <input id="removeData" type="number" value="0"></label>
     <button id="removeButton" onclick="removeData()">Remove!</button>
-    <button id="changeO" onclick="changeOrientation()">Flip chart</button>
+
+    <br>
+
     <label>Add point: <input id="addPoint" type="number" value="0"></label>
-    <button id="addButton" onclick="addPoint()">Add!</button>
+    <button id="addPointButton" onclick="addPoint()">Add!</button>
     <boxplot_builder id="boxplot_builder"></boxplot_builder>
+
+    <button id="changeO" onclick="changeOrientation()">Flip chart</button>
 
     <script src="https://cdn.anychart.com/releases/8.10.0/js/anychart-core.min.js"></script>
     <script src="https://cdn.anychart.com/releases/8.10.0/js/anychart-cartesian.min.js"></script>

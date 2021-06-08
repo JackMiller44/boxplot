@@ -164,6 +164,22 @@ function addBox(name) {
 	rebuildPlot();
 }
 
+//adds an additional boxplot on the current chart
+function removePlot(name) {
+	let exists = -1;
+	box.data.forEach((nm, index) => {
+			if(nm.x == name) {
+				exists = index;
+			}
+		}
+	)
+	if(exists != -1) {
+		box.data.splice(exists, 1);
+		box.points.splice(exists, 1);
+	}
+	rebuildPlot();
+}
+
 //index corresponds to the index of the dropdown menu
 function addData(index) {
 	box.addValue(parseInt(document.getElementById("addData").value), index);
