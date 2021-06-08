@@ -1,7 +1,6 @@
 (function() {
 	class BoxPlot extends HTMLElement {
-		_defaultValues = [0, 25, 50, 75, 100, 400];
-		_values = [this._defaultValues];
+		_values = [[0, 25, 50, 75, 100, 400]];
 		_outliers = false;
 		_showArms = false;
 		data = [];
@@ -29,10 +28,14 @@
 		}
 
 		//adds an additional boxplot on the current chart
-		addPlot(arr, name) {
-			const index = this._values.push(arr) - 1;
+		addPlot(name) {
+			const index = this._values.push([]) - 1;
 			this.data.push({x: name});
 			this.recalculate(index);
+		}
+
+		removePlot(name) {
+
 		}
 
 		//adds value to the dataset of boxplot at index index
@@ -141,6 +144,8 @@ function rebuildPlot() {
 	series2.medianStroke({thickness:0});
 	series2.tooltip(false);
 	series2.xPointPosition(0.5);
+
+	buildDropdown();
 }
 
 anychart.onDocumentReady(function () {
@@ -160,8 +165,17 @@ anychart.onDocumentReady(function () {
 });
 
 function addBox(name) {
-	box.addPlot([], name);
-	rebuildPlot();
+	let exists = -1;
+	box.data.forEach((nm, index) => {
+			if(nm.x == name) {
+				exists = index;
+			}
+		}
+	)
+	if(exists == -1) {
+		box.addPlot(name);
+		rebuildPlot();
+	}
 }
 
 //adds an additional boxplot on the current chart
@@ -176,24 +190,26 @@ function removePlot(name) {
 	if(exists != -1) {
 		box.data.splice(exists, 1);
 		box.points.splice(exists, 1);
+		box._values.splice(exists, 1);
+		rebuildPlot();
 	}
+}
+
+//index corresponds to the index of the dropdown menu
+function addData() {
+	box.addValue(parseInt(document.getElementById("addData").value), document.getElementById('addDP').selectedIndex);
 	rebuildPlot();
 }
 
 //index corresponds to the index of the dropdown menu
-function addData(index) {
-	box.addValue(parseInt(document.getElementById("addData").value), index);
+function removeData() {
+	box.removeValue(parseInt(document.getElementById("removeData").value), document.getElementById('addDP').selectedIndex);
 	rebuildPlot();
 }
 
 //index corresponds to the index of the dropdown menu
-function removeData(index) {
-	box.removeValue(parseInt(document.getElementById("removeData").value), index);
-	rebuildPlot();
-}
-
-//index corresponds to the index of the dropdown menu
-function addPoint(index) {
+function addPoint() {
+	let index = document.getElementById('addDP').selectedIndex
 	if(box.points[index] == null) {
 		box.points[index] = [parseInt(document.getElementById("addPoint").value)];
 	} else {
@@ -202,9 +218,10 @@ function addPoint(index) {
 	rebuildPlot();
 }
 
-function removePoint(index) {
-	const toRemove = parseInt(document.getElementById("addPoint").value);
-	const newPoints = box.points[index].filter(element => element != toRemove);
+function removePoint() {
+	let index = document.getElementById('addDP').selectedIndex
+	let toRemove = parseInt(document.getElementById("addPoint").value);
+	let newPoints = box.points[index].filter(element => element != toRemove);
 	box.points[index] = newPoints;
 	rebuildPlot();
 }
@@ -226,5 +243,20 @@ function toggleArms() {
 	} else {
 		series.stemStroke({thickness:0});
 		box.showArms = true;
+	}
+}
+
+function buildDropdown() {
+	const select = document.getElementById("addDP");
+	const names = box.data.map(elem => elem.x);
+	for(var i = select.childNodes.length - 1; i >= 0; i--) {
+		select.removeChild(select.childNodes[i]);
+	}
+	for (var i = 0; i < names.length; i++) {
+		var optn = names[i];
+		var el = document.createElement("option");
+		el.textContent = optn;
+		el.value = optn;
+		select.appendChild(el);
 	}
 }
