@@ -109,8 +109,7 @@ const box = document.querySelector('#boxplot');
 //refreshes plot to reflect most current data in the structure
 function rebuildPlot() {
 	//first remove the boxplots and the points
-	chart.removeSeriesAt(0);
-	chart.removeSeriesAt(0);
+	chart.removeAllSeries();
 
 	//builds all boxplots first
 	series = chart.box(box.data); //box.data is a list of dictionaries
@@ -148,36 +147,7 @@ anychart.onDocumentReady(function () {
 	chart = anychart.box();
 	
 	// create a box series and set the data
-	series = chart.box(box.data);
-
-	series.normal().fill("#0077ff", 0.6);
-	series.hovered().fill("#0077ff", 0.2);
-	series.selected().fill("#0077ff", 0.8);
-	series.normal().stroke("##0313fc", 1, "10 5", "round");
-	series.hovered().stroke("##0313fc", 2, "10 5", "round");
-	series.selected().stroke("##0313fc", 4, "10 5", "round");
-	series.whiskerWidth(5);
-	series.whiskerStroke({color: '#4680ac', thickness: 5});
-
-	series.xPointPosition(0.5);
-
-	//adds each subarray of points to arr
-	let arr = [];
-	for(let i = 0; i < box.points.length; i++) {
-		//takes the x of the corresponding boxplot so that they line up
-		arr.push({x: box.data[i].x, low:0, q1:0, median:0, q3:0, high:0, outliers: box.points[i]});
-	}
-	//adds arr to the chart
-	series2 = chart.box(arr);
-
-	series2.normal().fill("#ff0000", 0.6);
-	series2.normal().stroke({thickness:0});
-	series2.hovered().stroke({thickness:0});
-	series2.selected().stroke({thickness:0});
-	series2.medianStroke({thickness:0});
-	series2.tooltip(false);
-
-	series2.xPointPosition(0.5);
+	rebuildPlot();
 	
 	// set the chart title
 	chart.title("Sample Box Plot");
