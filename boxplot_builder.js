@@ -93,7 +93,9 @@
 			this.constructContainer();
 			this.constructStyle();
 			const boxplot = document.getElementById("boxplot");
-			boxplot.rebuildPlot();
+			if(boxplot.chart) {
+				boxplot.rebuildPlot();
+			}
 			// this.constructSegmentHtml();
 			// this.constructNodeHTML();
 		}
