@@ -1,8 +1,8 @@
 (function() {
 	class BoxPlot extends HTMLElement {
-		_values = [[0, 25, 50, 75, 100, 400]];
-		_outliers = false;
-		_showArms = false;
+		values = [[0, 25, 50, 75, 100, 400]];
+		outliers = false;
+		showArms = false;
 		data = [];
 		points = [[120, 420]];
 		chart = null;
@@ -35,7 +35,7 @@
 		}
 
 		get values() {
-			return this._values;
+			return this.values;
 		}
 
 		set outliers(newval) {
@@ -43,7 +43,7 @@
 		}
 
 		get showArms() {
-			return this._showArms;
+			return this.showArms;
 		}
 
 		set showArms(newval) {
@@ -64,7 +64,7 @@
 				}
 			)
 			if(exists == -1) {
-				const index = this._values.push([]) - 1;
+				const index = this.values.push([]) - 1;
 				this.data.push({x: name});
 				this.recalculate(index);
 				this.rebuildPlot();
@@ -82,21 +82,21 @@
 			if(exists != -1) {
 				this.data.splice(exists, 1);
 				this.points.splice(exists, 1);
-				this._values.splice(exists, 1);
+				this.values.splice(exists, 1);
 				this.rebuildPlot();
 			}
 		}
 
 		//adds value to the dataset of boxplot at index index
 		addValue(val, index) {
-			this._values[index].push(val);
+			this.values[index].push(val);
 			this.recalculate(index);
 			this.rebuildPlot();
 		}
 
 		//removes value from the dataset of boxplot at index index
 		removeValue(val, index) {
-			var dataset = this._values[index];
+			var dataset = this.values[index];
 			if(dataset.indexOf(val) !== -1) {
 				dataset.splice(dataset.indexOf(val), 1);
 				this.recalculate(index);
@@ -105,7 +105,7 @@
 		}
 		
 		//adds reference value point to boxplot at index index
-		addPoint(value, index) {
+		addRefPoint(value, index) {
 			if(this.points[index] == null) {
 				this.points[index] = [value];
 			} else if(this.points[index].indexOf(value) == -1) {
@@ -115,7 +115,7 @@
 			this.rebuildPlot();
 		}
 
-		removePoint(toRemove, index) {
+		removeRefPoint(toRemove, index) {
 			let newPoints = this.points[index].filter(element => element != toRemove);
 			this.points[index] = newPoints;
 			this.rebuildPlot();
@@ -134,7 +134,7 @@
 		
 		//calculates the 5 key points of the boxplot at index index, and updates the data to reflect that
 		recalculate(index) {
-			var dataset = this._values[index];
+			var dataset = this.values[index];
 
 			dataset.sort(function(a, b) {return a-b});
 
@@ -155,7 +155,7 @@
 				toAdd.q3 = this.getMedian(dataset.slice(dataset.length / 2 + 1));
 			}
 
-			if(this._outliers) { //check if outliers is true
+			if(this.outliers) { //check if outliers is true
 				const iqr = (toAdd.q3 - toAdd.q1) * 1.5;
 				if (toAdd.high > toAdd.q3+iqr){
 					toAdd.high = toAdd.q3+iqr;
@@ -208,12 +208,12 @@
 			// buildDropdown();
 		}
 
-		changeOrientation() {
+		flipAxes() {
 			this.chart.isVertical(!this.chart.isVertical());
 		}
 
 		toggleOutliers() {
-			this._outliers = !this._outliers;
+			this.outliers = !this.outliers;
 			for(let i = 0; i < this.data.length; i++) {
 				this.recalculate(i); // recalculate each dataset to (not) include outliers
 			}
@@ -298,17 +298,17 @@ function removeData() {
 function addPoint() {
 	let index = document.getElementById('addDP').selectedIndex
 	let value = parseInt(document.getElementById("addPoint").value)
-	document.getElementById("boxplot").addPoint(value, index)
+	document.getElementById("boxplot").addRefPoint(value, index)
 }
 
 function removePoint() {
 	let index = document.getElementById('addDP').selectedIndex
 	let toRemove = parseInt(document.getElementById("remPoint").value);
-	document.getElementById("boxplot").removePoint(toRemove, index)
+	document.getElementById("boxplot").removeRefPoint(toRemove, index)
 }
 
 function changeOrientation() {
-	document.getElementById("boxplot").changeOrientation()
+	document.getElementById("boxplot").flipAxes()
 }
 
 function toggleOutliers() {

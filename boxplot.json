@@ -32,8 +32,40 @@
         }
     ],
 	"properties": {
+        "values": {
+            "type": "string",
+            "description": "List of datasets of each boxplot shown"
+        },
+        "points": {
+            "type": "string",
+            "description": "List of all reference points of each boxplot shown"
+        }
 	},
 	"methods": {
+        "addPlot": {
+            "description": "Add a box plot to the chart",
+            "parameters": [
+                {
+                    "name": "name",
+                    "type": "string",
+                    "description": "The x-axis value of the box plot"
+            
+                }
+            ]
+        },
+
+        "removePlot": {
+            "description": "Remove a box plot from the chart",
+            "parameters": [
+                {
+                    "name": "name",
+                    "type": "string",
+                    "description": "The x-axis value of the box plot"
+            
+                }
+            ]
+        },
+
 		"addValue": {
             "description": "Add a value",
             "parameters": [
@@ -42,19 +74,78 @@
                     "type": "number",
                     "description": "value to be added"
             
+                },
+                {
+                    "name": "index",
+                    "type": "number",
+                    "description": "index of box plot to add the value to"
+            
                 }
             ]
         },
 
         "removeValue": {
-            "description": "Remove a value",
+            "description": "Remove a value (if it exists)",
             "parameters": [
                 {
                     "name": "val",
                     "type": "number",
-                    "description": "if value exists, then delete from values"
+                    "description": "value to be removed"
+                },
+                {
+                    "name": "index",
+                    "type": "number",
+                    "description": "index of box plot to remove the value from"
+            
                 }
             ]
+        }, 
+
+        "addRefPoint": {
+            "description": "Add a reference point",
+            "parameters": [
+                {
+                    "name": "val",
+                    "type": "number",
+                    "description": "value of the reference point to be added"
+            
+                },
+                {
+                    "name": "index",
+                    "type": "number",
+                    "description": "index of box plot to add reference point to"
+            
+                }
+            ]
+        },
+
+        "removeRefPoint": {
+            "description": "Remove a reference point (if it exists)",
+            "parameters": [
+                {
+                    "name": "val",
+                    "type": "number",
+                    "description": "value of the reference point to be removed"
+                },
+                {
+                    "name": "index",
+                    "type": "number",
+                    "description": "index of box plot to remove reference point from"
+            
+                }
+            ]
+        },
+
+        "flipAxes": {
+            "description": "Flip the x and y axes of the chart"
+        },
+
+        "toggleOutliers": {
+            "description": "Toggle whether outliers are calculated and shown or not"
+        },
+
+        "toggleArms": {
+            "description": "Toggle whether arms are shown or not"
         }
 	},
 	"events": {
