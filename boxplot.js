@@ -231,7 +231,7 @@
 		}
 	}
 
-	customElements.define('boxplot-practice', BoxPlot);
+	customElements.define('boxplot-main', BoxPlot);
 })();
 
 //refreshes plot to reflect most current data in the structure

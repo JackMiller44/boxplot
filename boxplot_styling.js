@@ -42,5 +42,5 @@
 		}
 	}
 
-customElements.define("boxplot_styling", BoxPlot_Styling);
+customElements.define("boxplot-styling", BoxPlot_Styling);
 })();

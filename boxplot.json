@@ -11,22 +11,22 @@
     "webcomponents": [
         {
 			"kind": "main",
-			"tag": "boxplot",
-            "url": "https://sacwidgethost.z6.web.core.windows.net/boxplot.js",
+			"tag": "boxplot-main",
+            "url": "https://boxplotjs.s3.amazonaws.com/boxplot.js",
             "integrity": "",
             "ignoreIntegrity" : true
         },
 		{
 			"kind": "styling",
-			"tag": "boxplot_styling",
-            "url": "https://sacwidgethost.z6.web.core.windows.net/boxplot_styling.js",
+			"tag": "boxplot-styling",
+            "url": "https://boxplotjs.s3.amazonaws.com/boxplot_styling.js",
             "integrity": "",
             "ignoreIntegrity" : true
         },
 		{
 			"kind": "builder",
-			"tag": "boxplot_builder",
-            "url": "https://sacwidgethost.z6.web.core.windows.net/boxplot_builder.js",
+			"tag": "boxplot-builder",
+            "url": "https://boxplotjs.s3.amazonaws.com/boxplot_builder.js",
             "integrity": "",
             "ignoreIntegrity" : true
         }
