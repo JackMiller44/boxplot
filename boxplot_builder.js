@@ -296,5 +296,5 @@
 
 	}
 
-    customElements.define("boxplot-builder", BoxPlotBuilder);
+    customElements.define("boxplot-builder", BoxPlot_Builder);
 })();
