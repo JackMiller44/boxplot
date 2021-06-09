@@ -5,9 +5,32 @@
 		_showArms = false;
 		data = [];
 		points = [[120, 420]];
+		chart = null;
+
 		constructor() {
 			super();
+
+			this.series; //variable for boxplots
+			this.series2; //variable for reference points on boxplots
+			// const chart = anychart.box();
 			this.recalculate(0);
+
+			anychart.onDocumentReady(function () {
+				var chart = anychart.box();
+				document.querySelector('#boxplot').chart = chart;
+				// create a box series and set the data
+				document.querySelector('#boxplot').rebuildPlot();
+				
+				// set the chart title
+				chart.title("Sample Box Plot");
+			
+				// set the containder id
+				chart.container("boxplot");
+			
+				// initiate drawing the chart
+				chart.draw();
+			});
+			
 			//TODO: understand what shadow DOMs do and how they can benefit here
 		}
 
@@ -27,17 +50,48 @@
 			this._showArms = newval;
 		}
 
+		set chart(newchart) {
+			this.chart = newchart;
+		}
+
 		//adds an additional boxplot on the current chart
 		addPlot(name) {
-			const index = this._values.push([]) - 1;
-			this.data.push({x: name});
-			this.recalculate(index);
+			let exists = -1;
+			this.data.forEach((nm, index) => {
+					if(nm.x == name) {
+						exists = index;
+					}
+				}
+			)
+			if(exists == -1) {
+				const index = this._values.push([]) - 1;
+				this.data.push({x: name});
+				this.recalculate(index);
+				this.rebuildPlot();
+			}
+		}
+
+		removePlot(name) {
+			let exists = -1;
+			this.data.forEach((nm, index) => {
+					if(nm.x == name) {
+						exists = index;
+					}
+				}
+			)
+			if(exists != -1) {
+				this.data.splice(exists, 1);
+				this.points.splice(exists, 1);
+				this._values.splice(exists, 1);
+				this.rebuildPlot();
+			}
 		}
 
 		//adds value to the dataset of boxplot at index index
 		addValue(val, index) {
 			this._values[index].push(val);
 			this.recalculate(index);
+			this.rebuildPlot();
 		}
 
 		//removes value from the dataset of boxplot at index index
@@ -46,7 +100,25 @@
 			if(dataset.indexOf(val) !== -1) {
 				dataset.splice(dataset.indexOf(val), 1);
 				this.recalculate(index);
+				this.rebuildPlot();
 			}
+		}
+		
+		//adds reference value point to boxplot at index index
+		addPoint(value, index) {
+			if(this.points[index] == null) {
+				this.points[index] = [value];
+			} else if(this.points[index].indexOf(value) == -1) {
+				//prevent duplicate reference points on same boxplot
+				this.points[index].push(value);
+			}
+			this.rebuildPlot();
+		}
+
+		removePoint(toRemove, index) {
+			let newPoints = this.points[index].filter(element => element != toRemove);
+			this.points[index] = newPoints;
+			this.rebuildPlot();
 		}
 
 		//helper method for recalculate to get the median of array arr
@@ -98,15 +170,72 @@
 			this.data[index] = toAdd;
 		}
 
+		rebuildPlot() {
+			//first remove the boxplots and the points
+			this.chart.removeAllSeries();
+		
+			//builds all boxplots first
+			this.series = this.chart.box(this.data); //box.data is a list of dictionaries
+			this.series.normal().fill("#0077ff", 0.6);
+			this.series.hovered().fill("#0077ff", 0.2);
+			this.series.selected().fill("#0077ff", 0.8);
+			this.series.normal().stroke("##0313fc", 1, "10 5", "round");
+			this.series.hovered().stroke("##0313fc", 2, "10 5", "round");
+			this.series.selected().stroke("##0313fc", 4, "10 5", "round");
+			this.series.whiskerWidth(5);
+			this.series.whiskerStroke({color: '#4680ac', thickness: 5});
+		
+			this.series.xPointPosition(0.5);
+		
+			//adds points corresponding to boxplots
+			//adds each subarray of points to arr
+			let arr = [];
+			for(let i = 0; i < this.points.length; i++) {
+				//takes the x of the corresponding boxplot so that they line up
+				arr.push({x: this.data[i].x, low:0, q1:0, median:0, q3:0, high:0, outliers: this.points[i]});
+			}
+			//adds arr to the chart
+			this.series2 = this.chart.box(arr); //pts 1
+		
+			this.series2.normal().fill("#ff0000", 0.6);
+			this.series2.normal().stroke({thickness:0});
+			this.series2.hovered().stroke({thickness:0});
+			this.series2.selected().stroke({thickness:0});
+			this.series2.medianStroke({thickness:0});
+			this.series2.tooltip(false);
+			this.series2.xPointPosition(0.5);
+		
+			// buildDropdown();
+		}
+
+		changeOrientation() {
+			this.chart.isVertical(!this.chart.isVertical());
+		}
+
+		toggleOutliers() {
+			this._outliers = !this._outliers;
+			for(let i = 0; i < this.data.length; i++) {
+				this.recalculate(i); // recalculate each dataset to (not) include outliers
+			}
+			this.rebuildPlot();
+		}
+
+		toggleArms() {
+			if(this.showArms) {
+				this.series.stemStroke({color:"#4680ac", thickness:1});
+				this.showArms = false;
+			} else {
+				this.series.stemStroke({thickness:0});
+				this.showArms = true;
+			}
+		}
 	}
 
 	customElements.define('boxplot-practice', BoxPlot);
 })();
 
-const box = document.querySelector('#boxplot');
-
 //refreshes plot to reflect most current data in the structure
-function rebuildPlot() {
+function rebuildPlot(chart) {
 	//first remove the boxplots and the points
 	chart.removeAllSeries();
 
@@ -144,107 +273,55 @@ function rebuildPlot() {
 	buildDropdown();
 }
 
-anychart.onDocumentReady(function () {
-	chart = anychart.box();
-	
-	// create a box series and set the data
-	rebuildPlot();
-	
-	// set the chart title
-	chart.title("Sample Box Plot");
 
-	// set the containder id
-	chart.container("boxplot");
-
-	// initiate drawing the chart
-	chart.draw();
-});
 
 function addBox(name) {
-	let exists = -1;
-	box.data.forEach((nm, index) => {
-			if(nm.x == name) {
-				exists = index;
-			}
-		}
-	)
-	if(exists == -1) {
-		box.addPlot(name);
-		rebuildPlot();
-	}
+	document.getElementById("boxplot").addPlot(name);
 }
 
 //adds an additional boxplot on the current chart
 function removePlot(name) {
-	let exists = -1;
-	box.data.forEach((nm, index) => {
-			if(nm.x == name) {
-				exists = index;
-			}
-		}
-	)
-	if(exists != -1) {
-		box.data.splice(exists, 1);
-		box.points.splice(exists, 1);
-		box._values.splice(exists, 1);
-		rebuildPlot();
-	}
+	document.getElementById("boxplot").removePlot(name);
 }
 
 //index corresponds to the index of the dropdown menu
 function addData() {
-	box.addValue(parseInt(document.getElementById("addData").value), document.getElementById('addDP').selectedIndex);
-	rebuildPlot();
+	document.getElementById("boxplot").addValue(parseInt(document.getElementById("addData").value), document.getElementById('addDP').selectedIndex);
 }
 
 //index corresponds to the index of the dropdown menu
 function removeData() {
-	box.removeValue(parseInt(document.getElementById("removeData").value), document.getElementById('addDP').selectedIndex);
-	rebuildPlot();
+	document.getElementById("boxplot").removeValue(parseInt(document.getElementById("removeData").value), document.getElementById('addDP').selectedIndex);
 }
 
 //index corresponds to the index of the dropdown menu
 function addPoint() {
 	let index = document.getElementById('addDP').selectedIndex
-	if(box.points[index] == null) {
-		box.points[index] = [parseInt(document.getElementById("addPoint").value)];
-	} else {
-		box.points[index].push(parseInt(document.getElementById("addPoint").value));
-	}
-	rebuildPlot();
+	let value = parseInt(document.getElementById("addPoint").value)
+	document.getElementById("boxplot").addPoint(value, index)
 }
 
 function removePoint() {
 	let index = document.getElementById('addDP').selectedIndex
 	let toRemove = parseInt(document.getElementById("remPoint").value);
-	let newPoints = box.points[index].filter(element => element != toRemove);
-	box.points[index] = newPoints;
-	rebuildPlot();
+	document.getElementById("boxplot").removePoint(toRemove, index)
 }
 
 function changeOrientation() {
-	chart.isVertical(!chart.isVertical());
+	document.getElementById("boxplot").changeOrientation()
 }
 
 function toggleOutliers() {
-	box._outliers = !box._outliers;
-	box.recalculate(0); //change 0 when we make dropdown menu
-	rebuildPlot();
+	document.getElementById("boxplot").toggleOutliers()
 }
 
 function toggleArms() {
-	if(box.showArms) {
-		series.stemStroke({color:"#4680ac", thickness:1});
-		box.showArms = false;
-	} else {
-		series.stemStroke({thickness:0});
-		box.showArms = true;
-	}
+	document.getElementById("boxplot").toggleArms()
 }
 
 function buildDropdown() {
 	const select = document.getElementById("addDP");
-	const names = box.data.map(elem => elem.x);
+	const names = document.getElementById("boxplot").data.map(elem => elem.x);
 	for(var i = select.childNodes.length - 1; i >= 0; i--) {
 		select.removeChild(select.childNodes[i]);
 	}
