@@ -23,8 +23,8 @@
 					detail: {
 						properties: {
 							color: this.color,
-							segmentList: this.segmentList,
-							nodeList: this.nodeList
+							values: this.values,
+							points: this.points
 						}
 					}
 			}));
@@ -35,8 +35,8 @@
 				detail: {
 					properties: {
 						color: props.color,
-						segmentList: props.segmentList,
-						nodeList: props.nodeList
+						values: props.values,
+						points: props.points
 					}
 				}
 			}));
@@ -53,28 +53,32 @@
 			return this._shadowRoot.getElementById("backgroundColor").value;
 		}
 
-        set segmentList(value) {
+        set values(value) {
 			if (typeof value === "object") {
-				this.props.segmentList = value;
+				this.props.values = value;
 			}
 			if (typeof value === "string" ) {
-				this.props.segmentList = JSON.parse(value);
+				this.props.values = JSON.parse(value);
 			}
 			this.construct();
 		}
 
-		set nodeList(value) {
+		set points(value) {
 			if (typeof value === "object") {
-				this.props.nodeList = value;
+				this.props.points = value;
 			}
 			if (typeof value === "string" ) {
-				this.props.nodeList = JSON.parse(value);
+				this.props.points = JSON.parse(value);
 			}
 			this.construct();
         }
 
-		get segmentList() {
-			return this._shadowRoot.getElementById("segmentList").value;
+		get values() {
+			return this._shadowRoot.getElementById("values").value;
+		}
+
+		get points() {
+			return this._shadowRoot.getElementById("points").value;
 		}
 
 		colorChange(e) {
@@ -88,8 +92,10 @@
 		construct() {
 			this.constructContainer();
 			this.constructStyle();
-			this.constructSegmentHtml();
-			this.constructNodeHTML();
+			const boxplot = document.getElementById("boxplot");
+			boxplot.rebuildPlot();
+			// this.constructSegmentHtml();
+			// this.constructNodeHTML();
 		}
 
 		constructContainer() {
@@ -107,17 +113,22 @@
 					flex-direction: column;
 					align-items: center;
 				}
-				input, button {
-					padding: 4px 8px
-				}
-				div {
-					margin-left: 16px;
-				}
-				label {
-					margin-bottom: 2px;
-				}
-				hr {
+				html, body {
+					display: block;
+					position: relative;
 					width: 100%;
+					height: 100%;
+					margin: 0;
+					padding: 0;
+				}
+				#boxplot {
+					display: block;
+					position: relative;
+					left: 120px;
+					width:40%;
+					height: 85%;
+					margin:0;
+					padding:0;
 				}
             `;
 			this.container.appendChild(style);
