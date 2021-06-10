@@ -233,7 +233,7 @@
 
 	customElements.define('boxplot-main', BoxPlot);
 })();
-/*
+
 //refreshes plot to reflect most current data in the structure
 function rebuildPlot(chart) {
 	//first remove the boxplots and the points
@@ -275,7 +275,7 @@ function rebuildPlot(chart) {
 
 
 
-function addBox(name) {
+function addPlot(name) {
 	document.getElementById("boxplot").addPlot(name);
 }
 
@@ -333,4 +333,3 @@ function buildDropdown() {
 		select.appendChild(el);
 	}
 }
-*/
