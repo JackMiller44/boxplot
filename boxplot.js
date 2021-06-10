@@ -277,11 +277,13 @@ function rebuildPlot(chart) {
 
 function addPlot(name) {
 	document.getElementById("boxplot").addPlot(name);
+	buildDropdown();
 }
 
 //adds an additional boxplot on the current chart
 function removePlot(name) {
 	document.getElementById("boxplot").removePlot(name);
+	buildDropdown();
 }
 
 //index corresponds to the index of the dropdown menu
