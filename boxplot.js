@@ -2118,7 +2118,7 @@ xScroller:{orientation:"left",inverted:!0},yScroller:{orientation:"bottom",inver
 
 			var myProps = this._props
 			
-			rebuildPlot();
+			this.rebuildPlot();
 
 			console.log("changedProperties = ", changedProperties);
 		}
