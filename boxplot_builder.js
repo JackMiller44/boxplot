@@ -92,7 +92,7 @@
 		construct() {
 			this.constructContainer();
 			this.constructStyle();
-			const boxplot = document.getElementById("boxplot");
+			const boxplot = this._shadowRoot.querySelector("#boxplot");
 			if(boxplot.chart) {
 				boxplot.rebuildPlot();
 			}
