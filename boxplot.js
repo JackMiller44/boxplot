@@ -2059,7 +2059,7 @@ xScroller:{orientation:"left",inverted:!0},yScroller:{orientation:"bottom",inver
 							display: block;
 						} 
 					</style> 
-					<div id="chart_div"></div>
+					<boxplot-main id="boxplot"></boxplot-main>
 				`;
 
 	class BoxPlot extends HTMLElement {
