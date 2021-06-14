@@ -2083,6 +2083,7 @@ xScroller:{orientation:"left",inverted:!0},yScroller:{orientation:"bottom",inver
 
 			this.chart = anychart.box();
 			// create a box series and set the data
+			this.recalculate(0);
 			this.rebuildPlot();
 
 			// set the chart title
@@ -2097,7 +2098,6 @@ xScroller:{orientation:"left",inverted:!0},yScroller:{orientation:"bottom",inver
 			this.series; //variable for boxplots
 			this.series2; //variable for reference points on boxplots
 			// const chart = anychart.box();
-			this.recalculate(0);
 			//TODO: understand what shadow DOMs do and how they can benefit here
 		}
 		
