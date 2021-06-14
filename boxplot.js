@@ -2059,10 +2059,10 @@ $_=window.anychart;$_.$=$;$_._=_});
 						:host {
 							display: block;
 							width: 100%;
-							height: 75%;
+							height: 100%;
 						} 
 						#container {
-							width: 50%;
+							width: 100%;
 							height: 100%;
 						}
 					</style> 
