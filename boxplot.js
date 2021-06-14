@@ -9,16 +9,22 @@
 		document.body.appendChild(my_src2);
 	  }
 
-	  loadMyScript();
+	loadMyScript();
 	
 	let template = document.createElement("template");
 	template.innerHTML = `
 					<style>
 						:host {
 							display: block;
+							width: 100%;
+							height: 75%;
 						} 
+						#container {
+							width: 50%;
+							height: 100%;
+						}
 					</style> 
-					<boxplot-main id="boxplot"></boxplot-main>
+					<div id="container"></div>
 				`;
 
 	class BoxPlot extends HTMLElement {
@@ -41,7 +47,7 @@
 			this._props = {};
 
 			var chart = anychart.box();
-
+			this.chart = chart;
 			// create a box series and set the data
 			
 
@@ -49,14 +55,14 @@
 			chart.title("Sample Box Plot");
 
 			// set the containder id
-			var domElement = shadowRoot.getElementById('boxplot');
+			var domElement = shadowRoot.getElementById('container');
 
 			chart.container(domElement);
 
 			// initiate drawing the chart
 			chart.draw();
 			this.recalculate(0);
-			// this.rebuildPlot();
+			this.rebuildPlot();
 			// this.chart = chart;
 			this.series; //variable for boxplots
 			this.series2; //variable for reference points on boxplots
@@ -77,47 +83,12 @@
 			console.log("this._props prop = ", this._props);
 			this._props = { ...this._props, ...changedProperties };
 
-			var ctx = this.shadowRoot.getElementById('boxplot');
+			var ctx = this.shadowRoot.getElementById('container');
 
 			var myProps = this._props
 			
-			myRebuildPlot(ctx);
+			this.rebuildPlot();
 
-
-			function myRebuildPlot(ctx) {
-				ctx.chart.removeAllSeries();
-		
-				//builds all boxplots first
-				ctx.series = ctx.chart.box(ctx.data); //box.data is a list of dictionaries
-				ctx.series.normal().fill("#0077ff", 0.6);
-				ctx.series.hovered().fill("#0077ff", 0.2);
-				ctx.series.selected().fill("#0077ff", 0.8);
-				ctx.series.normal().stroke("##0313fc", 1, "10 5", "round");
-				ctx.series.hovered().stroke("##0313fc", 2, "10 5", "round");
-				ctx.series.selected().stroke("##0313fc", 4, "10 5", "round");
-				ctx.series.whiskerWidth(5);
-				ctx.series.whiskerStroke({color: '#4680ac', thickness: 5});
-			
-				ctx.series.xPointPosition(0.5);
-			
-				//adds points corresponding to boxplots
-				//adds each subarray of points to arr
-				let arr = [];
-				for(let i = 0; i < ctx.points.length; i++) {
-					//takes the x of the corresponding boxplot so that they line up
-					arr.push({x: ctx.data[i].x, low:0, q1:0, median:0, q3:0, high:0, outliers: ctx.points[i]});
-				}
-				//adds arr to the chart
-				ctx.series2 = ctx.chart.box(arr); //pts 1
-			
-				ctx.series2.normal().fill("#ff0000", 0.6);
-				ctx.series2.normal().stroke({thickness:0});
-				ctx.series2.hovered().stroke({thickness:0});
-				ctx.series2.selected().stroke({thickness:0});
-				ctx.series2.medianStroke({thickness:0});
-				ctx.series2.tooltip(false);
-				ctx.series2.xPointPosition(0.5);
-			}
 			console.log("changedProperties = ", changedProperties);
 		}
 
@@ -255,10 +226,10 @@
 
 		rebuildPlot() {
 			//first remove the boxplots and the points
-			chart.removeAllSeries();
+			this.chart.removeAllSeries();
 		
 			//builds all boxplots first
-			this.series = chart.box(this.data); //box.data is a list of dictionaries
+			this.series = this.chart.box(this.data); //box.data is a list of dictionaries
 			this.series.normal().fill("#0077ff", 0.6);
 			this.series.hovered().fill("#0077ff", 0.2);
 			this.series.selected().fill("#0077ff", 0.8);
@@ -278,7 +249,7 @@
 				arr.push({x: this.data[i].x, low:0, q1:0, median:0, q3:0, high:0, outliers: this.points[i]});
 			}
 			//adds arr to the chart
-			this.series2 = chart.box(arr); //pts 1
+			this.series2 = this.chart.box(arr); //pts 1
 		
 			this.series2.normal().fill("#ff0000", 0.6);
 			this.series2.normal().stroke({thickness:0});

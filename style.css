@@ -7,11 +7,8 @@ html, body{
 	padding: 0;
 }
 #boxplot {
-	display: block;
 	position: relative;
 	left: 120px;
-	width:40%;
-	height: 85%;
 	margin:0;
 	padding:0;
 }
