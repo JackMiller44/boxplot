@@ -2073,27 +2073,6 @@ xScroller:{orientation:"left",inverted:!0},yScroller:{orientation:"bottom",inver
 		constructor() {
 			super();
 
-			this.series; //variable for boxplots
-			this.series2; //variable for reference points on boxplots
-			// const chart = anychart.box();
-			this.recalculate(0);
-
-			anychart.onDocumentReady(function () {
-				var chart = anychart.box();
-				document.querySelector('#boxplot').chart = chart;
-				// create a box series and set the data
-				document.querySelector('#boxplot').rebuildPlot();
-				
-				// set the chart title
-				chart.title("Sample Box Plot");
-			
-				// set the containder id
-				chart.container("boxplot");
-			
-				// initiate drawing the chart
-				chart.draw();
-			});
-
 			let shadowRoot = this.attachShadow({mode: "open"});
 			shadowRoot.appendChild(template.content.cloneNode(true));
 			this.addEventListener("click", event => {
@@ -2101,7 +2080,24 @@ xScroller:{orientation:"left",inverted:!0},yScroller:{orientation:"bottom",inver
 				this.dispatchEvent(event);
 			});
 			this._props = {};
-			
+
+			var chart = anychart.box();
+			// create a box series and set the data
+			this.rebuildPlot();
+
+			// set the chart title
+			this.chart.title("Sample Box Plot");
+
+			// set the containder id
+			this.chart.container("boxplot");
+
+			// initiate drawing the chart
+			this.chart.draw();
+
+			this.series; //variable for boxplots
+			this.series2; //variable for reference points on boxplots
+			// const chart = anychart.box();
+			this.recalculate(0);
 			//TODO: understand what shadow DOMs do and how they can benefit here
 		}
 		
