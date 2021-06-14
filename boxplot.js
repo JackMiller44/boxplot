@@ -2081,7 +2081,7 @@ xScroller:{orientation:"left",inverted:!0},yScroller:{orientation:"bottom",inver
 			});
 			this._props = {};
 
-			var chart = anychart.box();
+			this.chart = anychart.box();
 			// create a box series and set the data
 			this.rebuildPlot();
 
