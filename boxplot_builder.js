@@ -185,7 +185,7 @@
 				section.appendChild(del);
 				inputContainer.appendChild(lbl);
 				inputContainer.appendChild(el);
-				el.value = points[i];
+				el.value = item;
 				el.addEventListener("change", event => {
 					const newProps = JSON.parse(JSON.stringify(this.props));
 					// maybe need to parse from string to array
