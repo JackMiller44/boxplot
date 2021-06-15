@@ -165,7 +165,7 @@
 				el.type = "text";
 
 				const lbl = document.createElement("label");
-				lbl.innerHTML = "Reference points of " + xAxes[i];
+				lbl.innerHTML = "Reference points of " + this.props.xAxes[i];
 				lbl.style.marginTop = "16px";
 
 				const del = document.createElement("button");
@@ -228,7 +228,7 @@
 				el.style.maxWidth = "80px";
 
 				const lbl = document.createElement("label");
-				lbl.innerHTML = "Values of " + xAxes[i];
+				lbl.innerHTML = "Values of " + this.props.xAxes[i];
 				lbl.style.marginTop = "16px";
 
 				const del = document.createElement("button");
