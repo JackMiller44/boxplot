@@ -2087,7 +2087,7 @@ $_=window.anychart;$_.$=$;$_._=_});
 				var event = new Event("onClick");
 				this.dispatchEvent(event);
 			});
-			this._props = {values: this.values, points: this.points};
+			this._props = {xAxes: this.xAxes, values: this.values, points: this.points};
 
 			var chart = anychart.box();
 			this.chart = chart;
