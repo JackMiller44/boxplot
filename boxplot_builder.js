@@ -62,7 +62,7 @@
 			if (typeof value === "string" ) {
 				this.props.values = JSON.parse(value);
 			}
-			this.construct();
+			this.constructSegmentHtml();
 		}
 
 		set points(value) {
@@ -72,7 +72,7 @@
 			if (typeof value === "string" ) {
 				this.props.points = JSON.parse(value);
 			}
-			this.construct();
+			this.constructNodeHTML();
         }
 
 		set xAxes(value) {
@@ -112,7 +112,7 @@
 			this.constructContainer();
 			this.constructStyle();
 			this.constructSegmentHtml();
-			// this.constructNodeHTML();
+			this.constructNodeHTML();
 		}
 
 		constructContainer() {
@@ -151,7 +151,7 @@
 			this.container.appendChild(style);
         }
 
-		constructSegmentHtml() {
+		constructNodeHTML() {
 			this.props.points.forEach((item,i) => {
 				const section = document.createElement("div");
 				section.style.display = "flex";
@@ -214,7 +214,7 @@
 			// });
         }
 
-		constructNodeHTML() {
+		constructSegmentHtml() {
 			this.props.values.forEach((item,i) => {
 				const section = document.createElement("div");
 				section.style.display = "flex";
