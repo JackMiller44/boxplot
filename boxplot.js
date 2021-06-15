@@ -2123,6 +2123,20 @@ $_=window.anychart;$_.$=$;$_._=_});
 		onCustomWidgetAfterUpdate(changedProperties) {
 			console.log("onCustomWidgetAfterUpdate")
 			console.log("this._props prop = ", this._props);
+
+			if(typeof this.values === "string") {
+				this.values = JSON.parse(this.values)
+			}
+			if(typeof this.points === "string") {
+				this.points = JSON.parse(this.points)
+			}
+
+			if(typeof changedProperties.values === "string") {
+				changedProperties.values = JSON.parse(changedProperties.values)
+			}
+			if(typeof changedProperties.points === "string") {
+				changedProperties.points = JSON.parse(changedProperties.points)
+			}
 			this._props = { ...this._props, ...changedProperties };
 
 			var ctx = this.shadowRoot.getElementById('container');
@@ -2136,6 +2150,22 @@ $_=window.anychart;$_.$=$;$_._=_});
 
 		get values() {
 			return this.values;
+		}
+
+		set values(value) {
+			if(typeof value === "string") {
+				this.values = JSON.parse(value)
+			} else {
+				this.values = value
+			}
+		}
+
+		set points(value) {
+			if(typeof value === "string") {
+				this.points = JSON.parse(value)
+			} else {
+				this.points = value
+			}
 		}
 
 		set outliers(newval) {
