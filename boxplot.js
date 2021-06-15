@@ -2075,6 +2075,7 @@ $_=window.anychart;$_.$=$;$_._=_});
 		showArms = false;
 		data = [];
 		points = [[120, 420]];
+		xAxes = ["Sample Data"]
 		chart = null;
 
 		constructor() {
@@ -2130,12 +2131,18 @@ $_=window.anychart;$_.$=$;$_._=_});
 			if(typeof this.points === "string") {
 				this.points = JSON.parse(this.points)
 			}
+			if(typeof this.xAxes === "string") {
+				this.xAxes = JSON.parse(this.xAxes)
+			}
 
 			if(typeof changedProperties.values === "string") {
 				changedProperties.values = JSON.parse(changedProperties.values)
 			}
 			if(typeof changedProperties.points === "string") {
 				changedProperties.points = JSON.parse(changedProperties.points)
+			}
+			if(typeof changedProperties.xAxes === "string") {
+				changedProperties.xAxes = JSON.parse(changedProperties.xAxes)
 			}
 			this._props = { ...this._props, ...changedProperties };
 
@@ -2183,14 +2190,15 @@ $_=window.anychart;$_.$=$;$_._=_});
 		//adds an additional boxplot on the current chart
 		addPlot(name) {
 			let exists = -1;
-			this.data.forEach((nm, index) => {
-					if(nm.x == name) {
+			this.xAxes.forEach((elem, index) => {
+					if(elem == name) {
 						exists = index;
 					}
 				}
 			)
 			if(exists == -1) {
 				const index = this.values.push([]) - 1;
+				this.xAxes.push(name)
 				this.data.push({x: name});
 				this.recalculate(index);
 				this.rebuildPlot();
@@ -2199,14 +2207,15 @@ $_=window.anychart;$_.$=$;$_._=_});
 
 		removePlot(name) {
 			let exists = -1;
-			this.data.forEach((nm, index) => {
-					if(nm.x == name) {
+			this.xAxes.forEach((elem, index) => {
+					if(elem == name) {
 						exists = index;
 					}
 				}
 			)
 			if(exists != -1) {
 				this.data.splice(exists, 1);
+				this.xAxes.splice(exists, 1);
 				this.points.splice(exists, 1);
 				this.values.splice(exists, 1);
 				this.rebuildPlot();
@@ -2268,7 +2277,7 @@ $_=window.anychart;$_.$=$;$_._=_});
 			if(this.data.length == 0) {
 				toAdd.x = "Sample Data";
 			} else {
-				toAdd.x = this.data[index].x;
+				toAdd.x = this.xAxes[index];
 			}
 			toAdd.low = Math.min.apply(Math, dataset);
 			toAdd.q1 = this.getMedian(dataset.slice(0, dataset.length / 2));
@@ -2318,7 +2327,7 @@ $_=window.anychart;$_.$=$;$_._=_});
 			let arr = [];
 			for(let i = 0; i < this.points.length; i++) {
 				//takes the x of the corresponding boxplot so that they line up
-				arr.push({x: this.data[i].x, low:0, q1:0, median:0, q3:0, high:0, outliers: this.points[i]});
+				arr.push({x: this.xAxes[i], low:0, q1:0, median:0, q3:0, high:0, outliers: this.points[i]});
 			}
 			//adds arr to the chart
 			this.series2 = this.chart.box(arr); //pts 1
