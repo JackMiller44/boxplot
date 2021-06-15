@@ -2086,7 +2086,7 @@ $_=window.anychart;$_.$=$;$_._=_});
 				var event = new Event("onClick");
 				this.dispatchEvent(event);
 			});
-			this._props = {};
+			this._props = {values: this.values, points: this.points};
 
 			var chart = anychart.box();
 			this.chart = chart;
@@ -2106,8 +2106,8 @@ $_=window.anychart;$_.$=$;$_._=_});
 			this.recalculate(0);
 			this.rebuildPlot();
 			// this.chart = chart;
-			this.series; //variable for boxplots
-			this.series2; //variable for reference points on boxplots
+			// this.series; //variable for boxplots
+			// this.series2; //variable for reference points on boxplots
 			// const chart = anychart.box();
 			//TODO: understand what shadow DOMs do and how they can benefit here
 		}

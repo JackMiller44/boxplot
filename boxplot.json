@@ -34,11 +34,13 @@
 	"properties": {
         "values": {
             "type": "string",
-            "description": "List of datasets of each boxplot shown"
+            "description": "List of datasets of each boxplot shown",
+            "default": "[[0, 25, 50, 75, 100, 400]]"
         },
         "points": {
             "type": "string",
-            "description": "List of all reference points of each boxplot shown"
+            "description": "List of all reference points of each boxplot shown",
+            "default": "[[120, 420]]"
         }
 	},
 	"methods": {
