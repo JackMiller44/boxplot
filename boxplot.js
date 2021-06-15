@@ -2171,6 +2171,14 @@ $_=window.anychart;$_.$=$;$_._=_});
 			}
 		}
 
+		set xAxes(value) {
+			if(typeof value === "string") {
+				this.xAxes = JSON.parse(value)
+			} else {
+				this.xAxes = value
+			}
+		}
+
 		set outliers(newval) {
 			this._oultliers = newval;
 		}
