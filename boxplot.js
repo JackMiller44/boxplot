@@ -2125,30 +2125,26 @@ $_=window.anychart;$_.$=$;$_._=_});
 			console.log("onCustomWidgetAfterUpdate")
 			console.log("this._props prop = ", this._props);
 
+			if(typeof this.xAxes === "string") {
+				this.xAxes = JSON.parse(this.xAxes)
+			}
 			if(typeof this.values === "string") {
 				this.values = JSON.parse(this.values)
 			}
 			if(typeof this.points === "string") {
 				this.points = JSON.parse(this.points)
 			}
-			if(typeof this.xAxes === "string") {
-				this.xAxes = JSON.parse(this.xAxes)
-			}
 
+			if(typeof changedProperties.xAxes === "string") {
+				changedProperties.xAxes = JSON.parse(changedProperties.xAxes)
+			}
 			if(typeof changedProperties.values === "string") {
 				changedProperties.values = JSON.parse(changedProperties.values)
 			}
 			if(typeof changedProperties.points === "string") {
 				changedProperties.points = JSON.parse(changedProperties.points)
 			}
-			if(typeof changedProperties.xAxes === "string") {
-				changedProperties.xAxes = JSON.parse(changedProperties.xAxes)
-			}
 			this._props = { ...this._props, ...changedProperties };
-
-			var ctx = this.shadowRoot.getElementById('container');
-
-			var myProps = this._props
 			
 			this.rebuildPlot();
 
