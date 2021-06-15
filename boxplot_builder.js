@@ -23,9 +23,9 @@
 					detail: {
 						properties: {
 							color: this.color,
+							xAxes: this.xAxes,
 							values: this.values,
-							points: this.points,
-							xAxes: this.xAxes
+							points: this.points
 						}
 					}
 			}));
@@ -36,9 +36,9 @@
 				detail: {
 					properties: {
 						color: props.color,
+						xAxes: props.xAxes,
 						values: props.values,
-						points: props.points,
-						xAxes: props.xAxes
+						points: props.points
 					}
 				}
 			}));

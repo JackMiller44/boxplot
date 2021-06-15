@@ -32,6 +32,11 @@
         }
     ],
 	"properties": {
+        "xAxes": {
+            "type": "string",
+            "description": "List of all x axis values of each boxplot shown",
+            "default": "[\"Sample Data\"]"
+        },
         "values": {
             "type": "string",
             "description": "List of datasets of each boxplot shown",
@@ -41,11 +46,6 @@
             "type": "string",
             "description": "List of all reference points of each boxplot shown",
             "default": "[[120, 420]]"
-        },
-        "xAxes": {
-            "type": "string",
-            "description": "List of all x axis values of each boxplot shown",
-            "default": "[\"Sample Data\"]"
         }
 	},
 	"methods": {
