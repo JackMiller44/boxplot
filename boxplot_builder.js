@@ -24,7 +24,8 @@
 						properties: {
 							color: this.color,
 							values: this.values,
-							points: this.points
+							points: this.points,
+							xAxes: this.xAxes
 						}
 					}
 			}));
@@ -36,7 +37,8 @@
 					properties: {
 						color: props.color,
 						values: props.values,
-						points: props.points
+						points: props.points,
+						xAxes: props.xAxes
 					}
 				}
 			}));
@@ -73,11 +75,28 @@
 			this.construct();
         }
 
+		set xAxes(value) {
+			if (typeof value === "object") {
+				this.props.xAxes = value;
+			}
+			if (typeof value === "string" ) {
+				this.props.xAxes = JSON.parse(value);
+			}
+			this.construct();
+		}
+
 		get values() {
+			// change this
 			return this._shadowRoot.getElementById("values").value;
 		}
 
 		get points() {
+			// change this
+			return this._shadowRoot.getElementById("points").value;
+		}
+
+		get xAxes() {
+			// change this
 			return this._shadowRoot.getElementById("points").value;
 		}
 
@@ -92,11 +111,7 @@
 		construct() {
 			this.constructContainer();
 			this.constructStyle();
-			// const boxplot = this._shadowRoot.querySelector(".boxplot-main");
-			// if(boxplot.chart) {
-			// 	boxplot.rebuildPlot();
-			// }
-			// this.constructSegmentHtml();
+			this.constructSegmentHtml();
 			// this.constructNodeHTML();
 		}
 
@@ -137,7 +152,7 @@
         }
 
 		constructSegmentHtml() {
-			this.props.segmentList.forEach((item,i) => {
+			this.props.points.forEach((item,i) => {
 				const section = document.createElement("div");
 				section.style.display = "flex";
 				section.style.alignItems = "center"
@@ -151,7 +166,7 @@
 				el.type = "text";
 
 				const lbl = document.createElement("label");
-				lbl.innerHTML = "segment name";
+				lbl.innerHTML = "Reference points of " + xAxes[i];
 				lbl.style.marginTop = "16px";
 
 				const del = document.createElement("button");
@@ -161,7 +176,7 @@
 				del.addEventListener("click", event => {
 					const newProps = JSON.parse(JSON.stringify(this.props));
 					if (i > -1) {
-						newProps.segmentList.splice(i, 1);
+						newProps.points.splice(i, 1);
 					}
 					this.changeProps(newProps);
 				});
@@ -171,10 +186,11 @@
 				section.appendChild(del);
 				inputContainer.appendChild(lbl);
 				inputContainer.appendChild(el);
-				el.value = item.label;
+				el.value = points[i];
 				el.addEventListener("change", event => {
 					const newProps = JSON.parse(JSON.stringify(this.props));
-					newProps.segmentList[i] = {"label": event.path[0].value};
+					// maybe need to parse from string to array
+					newProps.points[i] = event.path[0].value;
 					this.changeProps(newProps);
 				});
 
@@ -190,15 +206,16 @@
 			const hr = document.createElement("hr");
 			this.container.appendChild(hr);
 
-			add.addEventListener("click", event => {
-				const newProps = JSON.parse(JSON.stringify(this.props));
-				newProps.segmentList.push({"label": "new segment"});
-				this.changeProps(newProps);
-			});
+			// points will not be created on their own
+			// add.addEventListener("click", event => {
+			// 	const newProps = JSON.parse(JSON.stringify(this.props));
+			// 	newProps.points.push({"label": "new segment"});
+			// 	this.changeProps(newProps);
+			// });
         }
 
 		constructNodeHTML() {
-			this.props.nodeList?.forEach((item,i) => {
+			this.props.values.forEach((item,i) => {
 				const section = document.createElement("div");
 				section.style.display = "flex";
 				section.style.alignItems = "center"
@@ -211,52 +228,8 @@
 				el.type = "text";
 				el.style.maxWidth = "80px";
 
-				const positionXContainer = document.createElement("div");
-				positionXContainer.style.display = "flex";
-				positionXContainer.style.flexDirection = "column";
-
-				const positionX = document.createElement("input");
-				positionX.style.maxWidth = "40px";
-				positionX.type = "number";
-
-				positionX.value = item.x;
-				positionX.addEventListener("change", event => {
-					const newProps = JSON.parse(JSON.stringify(this.props));
-					newProps.nodeList[i].x = event.path[0].value;
-					this.changeProps(newProps);
-				});
-
-				const positionX_lbl = document.createElement("label");
-				positionX_lbl.innerHTML = "x";
-				positionX_lbl.style.marginTop = "16px";
-
-				positionXContainer.appendChild(positionX_lbl);
-				positionXContainer.appendChild(positionX);
-
-				const positionYContainer = document.createElement("div");
-				positionYContainer.style.display = "flex";
-				positionYContainer.style.flexDirection = "column";
-
-				const positionY = document.createElement("input");
-				positionY.style.maxWidth = "40px";
-				positionY.type = "number";
-
-				positionY.value = item.y;
-				positionY.addEventListener("change", event => {
-					const newProps = JSON.parse(JSON.stringify(this.props));
-					newProps.nodeList[i].y = event.path[0].value;
-					this.changeProps(newProps);
-				});
-
-				const positionY_lbl = document.createElement("label");
-				positionY_lbl.innerHTML = "y";
-				positionY_lbl.style.marginTop = "16px";
-
-				positionYContainer.appendChild(positionY_lbl);
-				positionYContainer.appendChild(positionY);
-
 				const lbl = document.createElement("label");
-				lbl.innerHTML = "node name";
+				lbl.innerHTML = "Values of " + xAxes[i];
 				lbl.style.marginTop = "16px";
 
 				const del = document.createElement("button");
@@ -266,22 +239,21 @@
 				del.addEventListener("click", event => {
 					const newProps = JSON.parse(JSON.stringify(this.props));
 					if (i > -1) {
-						newProps.nodeList.splice(i, 1);
+						newProps.values.splice(i, 1);
 					}
 					this.changeProps(newProps);
 				});
 				
 				this.container.appendChild(section);
 				section.appendChild(inputContainer);
-				section.appendChild(positionXContainer);
-				section.appendChild(positionYContainer);
 				section.appendChild(del);
 				inputContainer.appendChild(lbl);
 				inputContainer.appendChild(el);
-				el.value = item.label;
+				el.value = item;
 				el.addEventListener("change", event => {
 					const newProps = JSON.parse(JSON.stringify(this.props));
-					newProps.nodeList[i].label = event.path[0].value;
+					// maybe need to parse from string to array
+					newProps.values[i] = event.path[0].value;
 					this.changeProps(newProps);
 				});
 			});
@@ -293,16 +265,13 @@
 			this.container.appendChild(add);
 			add.addEventListener("click", event => {
 				const newProps = JSON.parse(JSON.stringify(this.props));
-				if (!newProps.nodeList) {
-					newProps.nodeList = []
+				if (!newProps.values) {
+					newProps.values = []
 				}
-				const newNode = {
-					label: "label",
-					x: 500,
-					y: 500,
-					id: `radar-node-${newProps.nodeList.length}`
-				}
-				newProps.nodeList.push(newNode);
+				const newValues = [];
+				const newPoints = [];
+				newProps.values.push(newValues);
+				newProps.points.push(newPoints);
 				this.changeProps(newProps);
 			});
 		}
