@@ -12,21 +12,21 @@
         {
 			"kind": "main",
 			"tag": "boxplot-main",
-            "url": "https://boxplotjs.s3.amazonaws.com/boxplot.js",
+            "url": "https://raw.githubusercontent.com/JackMiller44/boxplot/main/boxplot.js",
             "integrity": "",
             "ignoreIntegrity" : true
         },
 		{
 			"kind": "styling",
 			"tag": "boxplot-styling",
-            "url": "https://boxplotjs.s3.amazonaws.com/boxplot_styling.js",
+            "url": "https://raw.githubusercontent.com/JackMiller44/boxplot/main/boxplot_styling.js",
             "integrity": "",
             "ignoreIntegrity" : true
         },
 		{
 			"kind": "builder",
 			"tag": "boxplot-builder",
-            "url": "https://boxplotjs.s3.amazonaws.com/boxplot_builder.js",
+            "url": "https://raw.githubusercontent.com/JackMiller44/boxplot/main/boxplot_builder.js",
             "integrity": "",
             "ignoreIntegrity" : true
         }
