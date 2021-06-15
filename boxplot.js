@@ -2193,7 +2193,7 @@ $_=window.anychart;$_.$=$;$_._=_});
 				const index = this.values.push([]) - 1;
 				this.data.push({x: name});
 				this.recalculate(index);
-				this.rebuildPlot(this.chart);
+				this.rebuildPlot();
 			}
 		}
 
@@ -2209,7 +2209,7 @@ $_=window.anychart;$_.$=$;$_._=_});
 				this.data.splice(exists, 1);
 				this.points.splice(exists, 1);
 				this.values.splice(exists, 1);
-				this.rebuildPlot(chart);
+				this.rebuildPlot();
 			}
 		}
 
@@ -2217,7 +2217,7 @@ $_=window.anychart;$_.$=$;$_._=_});
 		addValue(val, index) {
 			this.values[index].push(val);
 			this.recalculate(index);
-			this.rebuildPlot(chart);
+			this.rebuildPlot();
 		}
 
 		//removes value from the dataset of boxplot at index index
@@ -2226,7 +2226,7 @@ $_=window.anychart;$_.$=$;$_._=_});
 			if(dataset.indexOf(val) !== -1) {
 				dataset.splice(dataset.indexOf(val), 1);
 				this.recalculate(index);
-				this.rebuildPlot(chart);
+				this.rebuildPlot();
 			}
 		}
 		
@@ -2238,13 +2238,13 @@ $_=window.anychart;$_.$=$;$_._=_});
 				//prevent duplicate reference points on same boxplot
 				this.points[index].push(value);
 			}
-			this.rebuildPlot(chart);
+			this.rebuildPlot();
 		}
 
 		removeRefPoint(toRemove, index) {
 			let newPoints = this.points[index].filter(element => element != toRemove);
 			this.points[index] = newPoints;
-			this.rebuildPlot(chart);
+			this.rebuildPlot();
 		}
 
 		//helper method for recalculate to get the median of array arr
