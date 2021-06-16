@@ -25,6 +25,8 @@
 			this.container = document.createElement("div");
 			this._shadowRoot.appendChild(template.content.cloneNode(true));
             this._shadowRoot.appendChild(this.container);
+
+			this.construct();
 		}
 
 		connectedCallback() {
@@ -105,6 +107,7 @@
 
 		set chartTitle(value) {
 			this._shadowRoot.getElementById("builder_chartTitle").value = value;
+			this.construct();
 		}
 
 		get values() {
@@ -307,7 +310,7 @@
 		// }
 
 		constructTitle() {
-			nm = this._shadowRoot.getElementById("builder_chartTitle");
+			const nm = this._shadowRoot.getElementById("builder_chartTitle");
 			nm.value = this.chartTitle;
 			nm.addEventListener("change", event => {
 				const newProps = JSON.parse(JSON.stringify(this.props));
