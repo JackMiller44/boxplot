@@ -291,6 +291,7 @@
 
 		constructTitle() {
 			const nm = document.createElement("input");
+			nm.setAttribute("id", "builder_chartTitle");
 			nm.type = "text";
 			nm.value = this.chartTitle;
 			this.container.appendChild(nm);
