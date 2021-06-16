@@ -3,7 +3,7 @@
 	let template = document.createElement("template");
 	template.innerHTML = `
 		<form id="form">
-			<fieldset>
+			<fieldset id="field">
 				<input id="builder_chartTitle" value="" type="text"></input>
 			</fieldset>
 		</form>
@@ -320,7 +320,75 @@
 		}
 
 		constructBoxPlots() {
-		
+			const fset = this._shadowRoot.getElementById("field");
+			this.props.xAxes.forEach((item, i) => {
+				// Individual Box Plot Title
+				const ttl = document.createElement("input");
+				ttl.type = "text";
+				ttl.value = item;
+				ttl.addEventListener("change", event => {
+					const newProps = JSON.parse(JSON.stringify(this.props));
+					newProps.xAxes[i] = event.path[0].value;
+					this.changeProps(newProps);
+				});
+				fset.appendChild(ttl);
+				// Value Set
+				const el = document.createElement("input");
+				el.type = "text";
+				el.value = this.props.values[i];
+				el.addEventListener("change", event => {
+					const newProps = JSON.parse(JSON.stringify(this.props));
+					newProps.values[i] = event.path[0].value;
+					this.changeProps(newProps);
+				});
+
+				const lbl = document.createElement("label");
+				lbl.innerHTML = "Values of " + item;
+
+				fset.appendChild(lbl);
+				fset.appendChild(el);
+				// Reference Points
+				const elr = document.createElement("input");
+				elr.type = "text";
+				elr.value = this.props.points[i];
+				elr.addEventListener("change", event => {
+					const newProps = JSON.parse(JSON.stringify(this.props));
+					newProps.points[i] = event.path[0].value;
+					this.changeProps(newProps);
+				});
+
+				const lblr = document.createElement("label");
+				lblr.innerHTML = "Reference Points for " + item;
+
+				fset.appendChild(lblr);
+				fset.appendChild(elr);
+				// Delete Button
+				const del = document.createElement("button");
+				del.innerHTML = "Delete";
+				del.addEventListener("click", event => {
+					const newProps = JSON.parse(JSON.stringify(this.props));
+					if (i > -1) {
+						newProps.xAxes.splice(i, 1);
+						newProps.values.splice(i, 1);
+						newProps.points.splice(i, 1);
+					}
+					this.changeProps(newProps);
+				});
+				
+				fset.appendChild(del);
+			});
+			// Add Button
+			const add = document.createElement("button");
+			add.innerHTML = "add";
+			add.addEventListener("click", event => {
+				const newProps = JSON.parse(JSON.stringify(this.props));
+				newProps.xAxes.push("");
+				newProps.values.push([]);
+				newProps.points.push([]);
+				this.changeProps(newProps);
+			});	
+
+			fset.appendChild(add);	
 		}
 	}
 
