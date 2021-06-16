@@ -1,4 +1,20 @@
 (function()  {
+
+	let template = document.createElement("template");
+	template.innerHTML = `
+		<form id="form">
+			<fieldset>
+				<input id="builder_chartTitle" value="" type="text"></input>
+			</fieldset>
+		</form>
+		<style>
+			:host {
+			display: block;
+			padding: 1em 1em 1em 1em;
+			}
+		</style>
+		`;
+
 	class BoxPlot_Builder extends HTMLElement {
 		constructor() {
 			super();
@@ -7,6 +23,7 @@
 			this.props = {};
 
 			this.container = document.createElement("div");
+			this._shadowRoot.appendChild(template.content.cloneNode(true));
             this._shadowRoot.appendChild(this.container);
 		}
 
@@ -290,11 +307,8 @@
 		// }
 
 		constructTitle() {
-			const nm = document.createElement("input");
-			nm.setAttribute("id", "builder_chartTitle");
-			nm.type = "text";
+			nm = this._shadowRoot.getElementById("builder_chartTitle");
 			nm.value = this.chartTitle;
-			this.container.appendChild(nm);
 			nm.addEventListener("change", event => {
 				const newProps = JSON.parse(JSON.stringify(this.props));
 				newProps.chartTitle = event.path[0].value;
