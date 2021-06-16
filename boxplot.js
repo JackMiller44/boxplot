@@ -2075,8 +2075,9 @@ $_=window.anychart;$_.$=$;$_._=_});
 		showArms = false;
 		data = [];
 		points = [[120, 420]];
-		xAxes = ["Sample Data"]
+		xAxes = ["Sample Data"];
 		chart = null;
+		chartTitle = "Sample Box Plots";
 
 		constructor() {
 			super();
@@ -2087,7 +2088,7 @@ $_=window.anychart;$_.$=$;$_._=_});
 				var event = new Event("onClick");
 				this.dispatchEvent(event);
 			});
-			this._props = {xAxes: this.xAxes, values: this.values, points: this.points};
+			this._props = {chartTitle: this.chartTitle, xAxes: this.xAxes, values: this.values, points: this.points};
 
 			var chart = anychart.box();
 			this.chart = chart;
@@ -2095,7 +2096,7 @@ $_=window.anychart;$_.$=$;$_._=_});
 			
 
 			// set the chart title
-			chart.title("Sample Box Plot");
+			chart.title(this._props.chartTitle);
 
 			// set the containder id
 			var domElement = shadowRoot.getElementById('container');
@@ -2144,11 +2145,33 @@ $_=window.anychart;$_.$=$;$_._=_});
 			if(typeof changedProperties.points === "string") {
 				changedProperties.points = JSON.parse(changedProperties.points)
 			}
+
+			if("xAxes" in changedProperties) {
+				this.xAxes = changedProperties.xAxes;
+			}
+			if("values" in changedProperties) {
+				this.values = changedProperties.values;
+			}
+			if("points" in changedProperties) {
+				this.points = changedProperties.points;
+			}
+			if("chartTitle" in changedProperties) {
+				this.chartTitle = changedProperties.chartTitle;
+			}
+
 			this._props = { ...this._props, ...changedProperties };
 			
 			this.rebuildPlot();
 
 			console.log("changedProperties = ", changedProperties);
+		}
+
+		set chartTitle(newTitle) {
+			this.chartTitle = newTitle;
+		}
+
+		get chartTitle() {
+			return this.chartTitle;
 		}
 
 		get values() {
@@ -2312,6 +2335,7 @@ $_=window.anychart;$_.$=$;$_._=_});
 		rebuildPlot() {
 			//first remove the boxplots and the points
 			this.chart.removeAllSeries();
+			this.chart.title(this._props.chartTitle);
 		
 			//builds all boxplots first
 			this.series = this.chart.box(this.data); //box.data is a list of dictionaries
