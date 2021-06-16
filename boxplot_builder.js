@@ -21,9 +21,10 @@
 			this._shadowRoot = this.attachShadow({mode: "open"});
 			this.container;
 			this.props = {};
+			this.template = template.content.cloneNode(true);
 
 			this.container = document.createElement("div");
-			this._shadowRoot.appendChild(template.content.cloneNode(true));
+			this._shadowRoot.appendChild(this.template);
             this._shadowRoot.appendChild(this.container);
 
 			this.construct();
@@ -150,6 +151,9 @@
 			this.container?.parentNode.removeChild(this.container);
 			this.container = document.createElement("div");
             this._shadowRoot.appendChild(this.container);
+			this.template?.parentNode.removeChild(this.template);
+			this.template = template.content.cloneNode(true);
+            this._shadowRoot.appendChild(this.template);
 		}
 
 		constructStyle() {
