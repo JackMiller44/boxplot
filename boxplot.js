@@ -2160,6 +2160,11 @@ $_=window.anychart;$_.$=$;$_._=_});
 			}
 
 			this._props = { ...this._props, ...changedProperties };
+
+			this.data = [];
+			for(let i = 0; i < this.values.length; i++) {
+				this.recalculate(i);
+			}
 			
 			this.rebuildPlot();
 

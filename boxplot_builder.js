@@ -7,12 +7,6 @@
 				<input id="builder_chartTitle" value="" type="text"></input>
 			</fieldset>
 		</form>
-		<style>
-			:host {
-			display: block;
-			padding: 1em 1em 1em 1em;
-			}
-		</style>
 		`;
 
 	class BoxPlot_Builder extends HTMLElement {
@@ -27,7 +21,7 @@
 			this._shadowRoot.appendChild(this.template);
             this._shadowRoot.appendChild(this.container);
 
-			this.construct();
+			// this.construct();
 		}
 
 		connectedCallback() {
@@ -65,6 +59,7 @@
 				}
 			}));
 			this.props = props;
+			this.construct();
 		}
 
 		set color(color) {
@@ -121,7 +116,7 @@
 
 		get xAxes() {
 			// change this
-			return this._shadowRoot.getElementById("points").value;
+			return this.props.xAxes;
 		}
 
 		get chartTitle() {
@@ -151,7 +146,8 @@
 			this.container?.parentNode.removeChild(this.container);
 			this.container = document.createElement("div");
             this._shadowRoot.appendChild(this.container);
-			this.template?.parentNode.removeChild(this.template);
+			
+			this._shadowRoot.removeChild(this._shadowRoot.getElementById("form"));
 			this.template = template.content.cloneNode(true);
             this._shadowRoot.appendChild(this.template);
 		}
@@ -343,7 +339,7 @@
 				el.value = this.props.values[i];
 				el.addEventListener("change", event => {
 					const newProps = JSON.parse(JSON.stringify(this.props));
-					newProps.values[i] = event.path[0].value;
+					newProps.values[i] = JSON.parse("[" + event.path[0].value + "]");
 					this.changeProps(newProps);
 				});
 
@@ -358,7 +354,7 @@
 				elr.value = this.props.points[i];
 				elr.addEventListener("change", event => {
 					const newProps = JSON.parse(JSON.stringify(this.props));
-					newProps.points[i] = event.path[0].value;
+					newProps.points[i] = JSON.parse("[" + event.path[0].value + "]");
 					this.changeProps(newProps);
 				});
 
