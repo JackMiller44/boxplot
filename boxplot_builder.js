@@ -64,7 +64,6 @@
 				}
 			}));
 			this.props = props;
-			this.construct();
 		}
 
 		set color(color) {
@@ -93,7 +92,7 @@
 			if (typeof value === "string" ) {
 				this.props.points = JSON.parse(value);
 			}
-			//this.constructPoints();
+			this.construct();
         }
 
 		set xAxes(value) {
@@ -107,7 +106,6 @@
 
 		set chartTitle(value) {
 			this._shadowRoot.getElementById("builder_chartTitle").value = value;
-			this.construct();
 		}
 
 		get values() {
@@ -321,6 +319,9 @@
 
 		constructBoxPlots() {
 			const fset = this._shadowRoot.getElementById("field");
+			fset.style.display = "flex";
+			fset.style.flexDirection = "column";
+			fset.style.width = "100%";
 			this.props.xAxes.forEach((item, i) => {
 				// Individual Box Plot Title
 				const ttl = document.createElement("input");
