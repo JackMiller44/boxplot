@@ -2119,13 +2119,6 @@ $_=window.anychart;$_.$=$;$_._=_});
 		}
 
 		onCustomWidgetBeforeUpdate(changedProperties) {
-			this._props = { ...this._props, ...changedProperties };
-		}
-
-		onCustomWidgetAfterUpdate(changedProperties) {
-			console.log("onCustomWidgetAfterUpdate")
-			console.log("this._props prop = ", this._props);
-
 			if(typeof this.xAxes === "string") {
 				this.xAxes = JSON.parse(this.xAxes)
 			}
@@ -2146,6 +2139,13 @@ $_=window.anychart;$_.$=$;$_._=_});
 				changedProperties.points = JSON.parse(changedProperties.points)
 			}
 
+			this._props = { ...this._props, ...changedProperties };
+		}
+
+		onCustomWidgetAfterUpdate(changedProperties) {
+			console.log("onCustomWidgetAfterUpdate")
+			console.log("this._props prop = ", this._props);
+
 			if("xAxes" in changedProperties) {
 				this.xAxes = changedProperties.xAxes;
 			}
@@ -2158,8 +2158,6 @@ $_=window.anychart;$_.$=$;$_._=_});
 			if("chartTitle" in changedProperties) {
 				this.chartTitle = changedProperties.chartTitle;
 			}
-
-			this._props = { ...this._props, ...changedProperties };
 
 			this.data = [];
 			for(let i = 0; i < this.values.length; i++) {
@@ -2306,11 +2304,9 @@ $_=window.anychart;$_.$=$;$_._=_});
 			dataset.sort(function(a, b) {return a-b});
 
 			const toAdd = {low: 0, q1: 0, median: 0, q3: 0, high: 0};
-			if(this.data.length == 0) {
-				toAdd.x = "Sample Data";
-			} else {
-				toAdd.x = this.xAxes[index];
-			}
+			
+			toAdd.x = this.xAxes[index];
+			
 			toAdd.low = Math.min.apply(Math, dataset);
 			toAdd.q1 = this.getMedian(dataset.slice(0, dataset.length / 2));
 			toAdd.median = this.getMedian(dataset);
