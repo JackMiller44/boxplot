@@ -35,22 +35,22 @@
         "chartTitle": {
             "type": "string",
             "description": "The title of the entire chart displayed at the top",
-            "default": "Sample Box Plots"
+            "default": "Sample Box Plot"
         },
         "xAxes": {
             "type": "string",
             "description": "List of all x axis values of each boxplot shown",
-            "default": "[\"Sample Data\"]"
+            "default": "[]"
         },
         "values": {
             "type": "string",
             "description": "List of datasets of each boxplot shown",
-            "default": "[[0, 25, 50, 75, 100, 400]]"
+            "default": "[]"
         },
         "points": {
             "type": "string",
             "description": "List of all reference points of each boxplot shown",
-            "default": "[[120, 420]]"
+            "default": "[]"
         }
 	},
 	"methods": {
