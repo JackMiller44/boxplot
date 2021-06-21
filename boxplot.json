@@ -37,6 +37,21 @@
             "description": "The title of the entire chart displayed at the top",
             "default": "Sample Box Plot"
         },
+        "isVertical": {
+            "type": "string",
+            "description": "Whether the chart will be displayed vertically",
+            "default": "true"
+        },
+        "showsOutliers": {
+            "type": "string",
+            "description": "Whether outliers will be displayed separately from the arms",
+            "default": "false"
+        },
+        "showsArms": {
+            "type": "string",
+            "description": "Whether the arms will be displayed",
+            "default": "true"
+        },
         "xAxes": {
             "type": "string",
             "description": "List of all x axis values of each boxplot shown",

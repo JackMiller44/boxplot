@@ -37,6 +37,9 @@
 					detail: {
 						properties: {
 							chartTitle: this.chartTitle,
+							isVertical: this.isVertical,
+							showsOutliers: this.showsOutliers,
+							showsArms: this.showsArms,
 							color: this.color,
 							xAxes: this.xAxes,
 							values: this.values,
@@ -50,11 +53,14 @@
 			this.dispatchEvent(new CustomEvent("propertiesChanged", {
 				detail: {
 					properties: {
-						chartTitle: props.chartTitle,
-						color: props.color,
-						xAxes: props.xAxes,
-						values: props.values,
-						points: props.points
+						chartTitle: this.chartTitle,
+						isVertical: this.isVertical,
+						showsOutliers: this.showsOutliers,
+						showsArms: this.showsArms,
+						color: this.color,
+						xAxes: this.xAxes,
+						values: this.values,
+						points: this.points
 					}
 				}
 			}));
@@ -69,6 +75,33 @@
 
 		get color() {
 			return this._shadowRoot.getElementById("backgroundColor").value;
+		}
+
+		set isVertical(value) {
+			if (typeof value === "boolean") {
+				this.props.isVertical = value;
+			}
+			if (typeof value === "string" ) {
+				this.props.isVertical = JSON.parse(value);
+			}
+		}
+
+		set showsOutliers(value) {
+			if (typeof value === "boolean") {
+				this.props.showsOutliers = value;
+			}
+			if (typeof value === "string" ) {
+				this.props.showsOutliers = JSON.parse(value);
+			}
+		}
+
+		set showsArms(value) {
+			if (typeof value === "boolean") {
+				this.props.showsArms = value;
+			}
+			if (typeof value === "string" ) {
+				this.props.showsArms = JSON.parse(value);
+			}
 		}
 
         set values(value) {

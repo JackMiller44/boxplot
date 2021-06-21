@@ -2072,7 +2072,7 @@ $_=window.anychart;$_.$=$;$_._=_});
 	class BoxPlot extends HTMLElement {
 		values = [];
 		outliers = false;
-		showArms = false;
+		showArms = true;
 		data = [];
 		points = [];
 		xAxes = ["Sample Data"];
@@ -2088,7 +2088,15 @@ $_=window.anychart;$_.$=$;$_._=_});
 				var event = new Event("onClick");
 				this.dispatchEvent(event);
 			});
-			this._props = {chartTitle: this.chartTitle, xAxes: this.xAxes, values: this.values, points: this.points};
+			this._props = {
+				chartTitle: this.chartTitle,
+				isVertical: true,
+				showsOutliers: this.outliers,
+				showsArms: this.showArms,
+				xAxes: this.xAxes, 
+				values: this.values, 
+				points: this.points
+			};
 
 			var chart = anychart.box();
 			this.chart = chart;
@@ -2155,6 +2163,12 @@ $_=window.anychart;$_.$=$;$_._=_});
 		}
 
 		onCustomWidgetBeforeUpdate(changedProperties) {
+			if(typeof this.outliers === "string") {
+				this.xAxes = JSON.parse(this.outliers)
+			}
+			if(typeof this.showArms === "string") {
+				this.xAxes = JSON.parse(this.showArms)
+			}
 			if(typeof this.xAxes === "string") {
 				this.xAxes = JSON.parse(this.xAxes)
 			}
@@ -2165,6 +2179,15 @@ $_=window.anychart;$_.$=$;$_._=_});
 				this.points = JSON.parse(this.points)
 			}
 
+			if(typeof changedProperties.isVertical === "string") {
+				changedProperties.isVertical = JSON.parse(changedProperties.isVertical)
+			}
+			if(typeof changedProperties.showsOutliers === "string") {
+				changedProperties.showsOutliers = JSON.parse(changedProperties.showsOutliers)
+			}
+			if(typeof changedProperties.showsArms === "string") {
+				changedProperties.showsArms = JSON.parse(changedProperties.showsArms)
+			}
 			if(typeof changedProperties.xAxes === "string") {
 				changedProperties.xAxes = JSON.parse(changedProperties.xAxes)
 			}
@@ -2182,6 +2205,21 @@ $_=window.anychart;$_.$=$;$_._=_});
 			console.log("onCustomWidgetAfterUpdate")
 			console.log("this._props prop = ", this._props);
 
+			if("isVertical" in changedProperties) {
+				if(this.chart.isVertical() != changedProperties.isVertical) {
+					this.flipAxes();
+				}
+			}
+			if("showsOutliers" in changedProperties) {
+				if(this.outliers != changedProperties.showsOutliers) {
+					this.toggleOutliers();
+				}
+			}
+			if("showsArms" in changedProperties) {
+				if(this.showArms != changedProperties.showsArms) {
+					this.toggleArms();
+				}
+			}
 			if("xAxes" in changedProperties) {
 				this.xAxes = changedProperties.xAxes;
 			}
