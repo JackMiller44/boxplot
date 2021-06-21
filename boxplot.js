@@ -2116,11 +2116,36 @@ $_=window.anychart;$_.$=$;$_._=_});
 
 		async render(resultSet) {
 			// parse resultSet
-			// rewrite xAxes, values, points
+			const MEASURE_DIMENSION = '@MeasureDimension';
+			// Change these to whatever we are using
+			const xAxesTemp = [];
+			const valuesTemp = [];
+			//const series = [];
+			resultSet.forEach(dp => {
+				const { rawValue, description } = dp[MEASURE_DIMENSION];
+				const dateValue = dp.xAxesTemp.description;
+				const tempValue = Number(dp.valuesTemp.description);
+				
+
+				if (xAxesTemp.indexOf(dateValue) === -1){
+					xAxesTemp.push(dateValue);
+				}
+				
+				var currentIndex = xAxesTemp.indexOf(dateValue);
+				if(!valuesTemp[currentIndex]){
+					valuesTemp.push([]);
+				}
+				valuesTemp[currentIndex].push(tempValue);
+			})
+
+			this.xAxes = xAxesTemp;
+			this.values = valuesTemp;
+
 			// recalculate
 			for(let i = 0; i < this.xAxes.length; i++) {
 				this.recalculate(i);
 			}
+			
 			// rebuildPlot
 			this.rebuildPlot();
 		}
