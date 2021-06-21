@@ -54,6 +54,17 @@
         }
 	},
 	"methods": {
+        "render": {
+            "description": "Render",
+            "parameters": [
+                {
+                    "name": "resultSet",
+                    "type": "any",
+                    "description": "The json"
+                }
+            ]
+        },
+        
         "addPlot": {
             "description": "Add a box plot to the chart",
             "parameters": [
