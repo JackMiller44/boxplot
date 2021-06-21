@@ -2070,11 +2070,11 @@ $_=window.anychart;$_.$=$;$_._=_});
 				`;
 
 	class BoxPlot extends HTMLElement {
-		values = [[0, 25, 50, 75, 100, 400]];
+		values = [];
 		outliers = false;
 		showArms = false;
 		data = [];
-		points = [[120, 420]];
+		points = [];
 		xAxes = ["Sample Data"];
 		chart = null;
 		chartTitle = "Sample Box Plots";
