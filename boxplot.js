@@ -2124,7 +2124,7 @@ $_=window.anychart;$_.$=$;$_._=_});
 			resultSet.forEach(dp => {
 				const { rawValue, description } = dp[MEASURE_DIMENSION];
 				const dateValue = dp.Date.description;
-				const tempValue = Number(dp.MEASURE_DIMENSION.rawValue);
+				const tempValue = Number(rawValue);
 				
 
 				if (xAxesTemp.indexOf(dateValue) === -1){
