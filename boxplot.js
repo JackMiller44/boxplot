@@ -2123,8 +2123,8 @@ $_=window.anychart;$_.$=$;$_._=_});
 			//const series = [];
 			resultSet.forEach(dp => {
 				const { rawValue, description } = dp[MEASURE_DIMENSION];
-				const dateValue = dp.xAxesTemp.description;
-				const tempValue = Number(dp.valuesTemp.description);
+				const dateValue = dp.Date.description;
+				const tempValue = Number(dp.MEASURE_DIMENSION.rawValue);
 				
 
 				if (xAxesTemp.indexOf(dateValue) === -1){
