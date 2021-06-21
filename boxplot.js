@@ -2113,6 +2113,17 @@ $_=window.anychart;$_.$=$;$_._=_});
 			// const chart = anychart.box();
 			//TODO: understand what shadow DOMs do and how they can benefit here
 		}
+
+		async render(resultSet) {
+			// parse resultSet
+			// rewrite xAxes, values, points
+			// recalculate
+			for(let i = 0; i < this.xAxes.length; i++) {
+				this.recalculate(i);
+			}
+			// rebuildPlot
+			this.rebuildPlot();
+		}
 		
 		connectedCallback(){
 			
