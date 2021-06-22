@@ -361,7 +361,7 @@
 
 			const flip = document.createElement("input");
 			flip.type = "button";
-			if(newProps.isVertical) {
+			if(this.props.isVertical) {
 				flip.value = "Orientation: Vertical";
 			} else {
 				flip.value = "Orientation: Horizontal";
@@ -378,7 +378,7 @@
 
 			const out = document.createElement("input");
 			out.type = "button";
-			if(newProps.showsOutliers) {
+			if(this.props.showsOutliers) {
 				out.value = "Outliers: On";
 			} else {
 				out.value = "Outliers: Off";
@@ -395,7 +395,7 @@
 
 			const arms = document.createElement("input");
 			arms.type = "button";
-			if(newProps.showsArms) {
+			if(this.props.showsArms) {
 				arms.value = "Arms: On";
 			} else {
 				arms.value = "Arms: Off";
