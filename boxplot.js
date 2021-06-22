@@ -2280,7 +2280,7 @@ $_=window.anychart;$_.$=$;$_._=_});
 		}
 
 		set outliers(newval) {
-			this._oultliers = newval;
+			this.oultliers = newval;
 		}
 
 		get showArms() {
@@ -2288,7 +2288,7 @@ $_=window.anychart;$_.$=$;$_._=_});
 		}
 
 		set showArms(newval) {
-			this._showArms = newval;
+			this.showArms = newval;
 		}
 
 		//adds an additional boxplot on the current chart
