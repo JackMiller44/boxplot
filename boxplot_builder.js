@@ -362,9 +362,9 @@
 			const flip = document.createElement("input");
 			flip.type = "button";
 			if(this.props.isVertical) {
-				flip.value = "Orientation: Vertical";
-			} else {
 				flip.value = "Orientation: Horizontal";
+			} else {
+				flip.value = "Orientation: Vertical";
 			}
 			flip.style.fontSize = "19px";
 			flip.style.padding = "3px 0px 3px 0px";
