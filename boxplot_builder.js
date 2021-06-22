@@ -380,8 +380,10 @@
 			out.type = "button";
 			if(this.props.showsOutliers) {
 				out.value = "Outliers: On";
+				out.style.color = 'green';
 			} else {
 				out.value = "Outliers: Off";
+				out.style.color = 'red';
 			}
 			out.style.fontSize = "19px";
 			out.style.padding = "3px 0px 3px 0px";
@@ -397,8 +399,10 @@
 			arms.type = "button";
 			if(this.props.showsArms) {
 				arms.value = "Arms: On";
+				arms.style.color = 'green';
 			} else {
 				arms.value = "Arms: Off";
+				arms.style.color = 'red';
 			}
 			arms.style.fontSize = "19px";
 			arms.style.padding = "3px 0px 3px 0px";
