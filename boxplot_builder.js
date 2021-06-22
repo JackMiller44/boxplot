@@ -358,93 +358,149 @@
 			fset.style.display = "flex";
 			fset.style.flexDirection = "column";
 			fset.style.width = "100%";
-			this.props.xAxes.forEach((item, i) => {
-				// Individual Box Plot Title
-				const bord = document.createElement("label");
-				bord.style.borderTop = "5px solid black";
-				fset.appendChild(bord);
-				const ttl = document.createElement("input");
-				ttl.type = "text";
-				ttl.value = item;
-				ttl.style.fontSize = "19px";
-				ttl.style.padding = "3px 0px 3px 0px";
-				ttl.style.margin = "20px 0px 3px 0px";
-				ttl.addEventListener("change", event => {
-					const newProps = JSON.parse(JSON.stringify(this.props));
-					newProps.xAxes[i] = event.path[0].value;
-					this.changeProps(newProps);
-				});
-				fset.appendChild(ttl);
 
-				// Value Set
-				const el = document.createElement("input");
-				el.type = "text";
-				el.style.padding = "3px 0px 3px 3px";
-				el.style.margin = "5px 0px 5px 0px";
-				el.value = this.props.values[i];
-				el.addEventListener("change", event => {
-					const newProps = JSON.parse(JSON.stringify(this.props));
-					newProps.values[i] = JSON.parse("[" + event.path[0].value + "]");
-					this.changeProps(newProps);
-				});
-
-				const lbl = document.createElement("label");
-				lbl.innerHTML = "Values of " + item;
-                				
-                lbl.style.padding = "15px 5px 2px 0px";
-                lbl.style.fontSize = "20";
-
-				fset.appendChild(lbl);
-				fset.appendChild(el);
-				// Reference Points
-				const elr = document.createElement("input");
-				elr.type = "text";
-				elr.style.padding = "3px 0px 3px 3px";
-				elr.style.margin = "5px 0px 15px 0px";
-				elr.value = this.props.points[i];
-				elr.addEventListener("change", event => {
-					const newProps = JSON.parse(JSON.stringify(this.props));
-					newProps.points[i] = JSON.parse("[" + event.path[0].value + "]");
-					this.changeProps(newProps);
-				});
-
-				const lblr = document.createElement("label");
-				lblr.innerHTML = "Reference Points for " + item;
-				lblr.style.padding = "15px 5px 2px 0px";
-
-				fset.appendChild(lblr);
-				fset.appendChild(elr);
-				// Delete Button
-				const del = document.createElement("button");
-				del.innerHTML = "Delete";
-				del.style.padding = "3px 0px 3px 0px";
-				del.style.margin = "5px 0px 15px 0px";
-				del.addEventListener("click", event => {
-					const newProps = JSON.parse(JSON.stringify(this.props));
-					if (i > -1) {
-						newProps.xAxes.splice(i, 1);
-						newProps.values.splice(i, 1);
-						newProps.points.splice(i, 1);
-					}
-					this.changeProps(newProps);
-				});
-				
-				fset.appendChild(del);
-			});
-			// Add Button
-			const add = document.createElement("button");
-			add.innerHTML = "add";
-			add.style.padding = "3px 0px 3px 0px";
-			add.style.margin = "15px 0px 5px 0px";
-			add.addEventListener("click", event => {
+			const flip = document.createElement("input");
+			flip.type = "button";
+			flip.value = "Flip Axes";
+			flip.style.fontSize = "19px";
+			flip.style.padding = "3px 0px 3px 0px";
+			flip.style.margin = "20px 0px 3px 0px";
+			flip.addEventListener("click", event => {
 				const newProps = JSON.parse(JSON.stringify(this.props));
-				newProps.xAxes.push("");
-				newProps.values.push([]);
-				newProps.points.push([]);
+				newProps.isVertical = !newProps.isVertical;
 				this.changeProps(newProps);
-			});	
+			});
+			fset.appendChild(flip);
 
-			fset.appendChild(add);	
+			const out = document.createElement("input");
+			out.type = "button";
+			out.value = "Toggle Outliers";
+			out.style.fontSize = "19px";
+			out.style.padding = "3px 0px 3px 0px";
+			out.style.margin = "20px 0px 3px 0px";
+			out.addEventListener("click", event => {
+				const newProps = JSON.parse(JSON.stringify(this.props));
+				newProps.showsOutliers = !newProps.showsOutliers;
+				this.changeProps(newProps);
+			});
+			fset.appendChild(out);
+
+			const arms = document.createElement("input");
+			arms.type = "button";
+			arms.value = "Toggle Arms";
+			arms.style.fontSize = "19px";
+			arms.style.padding = "3px 0px 3px 0px";
+			arms.style.margin = "20px 0px 3px 0px";
+			arms.addEventListener("click", event => {
+				const newProps = JSON.parse(JSON.stringify(this.props));
+				newProps.showsArms = !newProps.showsArms;
+				this.changeProps(newProps);
+			});
+			fset.appendChild(arms);
+
+			// Reference Points
+			const elr = document.createElement("input");
+			elr.type = "text";
+			elr.style.padding = "3px 0px 3px 3px";
+			elr.style.margin = "5px 0px 15px 0px";
+			elr.value = this.props.points[i];
+			elr.addEventListener("change", event => {
+				const newProps = JSON.parse(JSON.stringify(this.props));
+				newProps.points[i] = JSON.parse("[" + event.path[0].value + "]");
+				this.changeProps(newProps);
+			});
+
+			const lblr = document.createElement("label");
+			lblr.innerHTML = "Reference Points for " + item;
+			lblr.style.padding = "15px 5px 2px 0px";
+
+			fset.appendChild(lblr);
+			fset.appendChild(elr);
+
+			// this.props.xAxes.forEach((item, i) => {
+			// 	// Flip Axes
+			// 	const ttl = document.createElement("input");
+			// 	ttl.type = "button";
+			// 	ttl.value = item;
+			// 	ttl.style.fontSize = "19px";
+			// 	ttl.style.padding = "3px 0px 3px 0px";
+			// 	ttl.style.margin = "20px 0px 3px 0px";
+			// 	ttl.addEventListener("change", event => {
+			// 		const newProps = JSON.parse(JSON.stringify(this.props));
+			// 		newProps.xAxes[i] = event.path[0].value;
+			// 		this.changeProps(newProps);
+			// 	});
+			// 	fset.appendChild(ttl);
+
+			// 	// Value Set
+			// 	const el = document.createElement("input");
+			// 	el.type = "text";
+			// 	el.style.padding = "3px 0px 3px 3px";
+			// 	el.style.margin = "5px 0px 5px 0px";
+			// 	el.value = this.props.values[i];
+			// 	el.addEventListener("change", event => {
+			// 		const newProps = JSON.parse(JSON.stringify(this.props));
+			// 		newProps.values[i] = JSON.parse("[" + event.path[0].value + "]");
+			// 		this.changeProps(newProps);
+			// 	});
+
+			// 	const lbl = document.createElement("label");
+			// 	lbl.innerHTML = "Values of " + item;
+                				
+            //     lbl.style.padding = "15px 5px 2px 0px";
+            //     lbl.style.fontSize = "20";
+
+			// 	fset.appendChild(lbl);
+			// 	fset.appendChild(el);
+			// 	// Reference Points
+			// 	const elr = document.createElement("input");
+			// 	elr.type = "text";
+			// 	elr.style.padding = "3px 0px 3px 3px";
+			// 	elr.style.margin = "5px 0px 15px 0px";
+			// 	elr.value = this.props.points[i];
+			// 	elr.addEventListener("change", event => {
+			// 		const newProps = JSON.parse(JSON.stringify(this.props));
+			// 		newProps.points[i] = JSON.parse("[" + event.path[0].value + "]");
+			// 		this.changeProps(newProps);
+			// 	});
+
+			// 	const lblr = document.createElement("label");
+			// 	lblr.innerHTML = "Reference Points for " + item;
+			// 	lblr.style.padding = "15px 5px 2px 0px";
+
+			// 	fset.appendChild(lblr);
+			// 	fset.appendChild(elr);
+			// 	// Delete Button
+			// 	const del = document.createElement("button");
+			// 	del.innerHTML = "Delete";
+			// 	del.style.padding = "3px 0px 3px 0px";
+			// 	del.style.margin = "5px 0px 15px 0px";
+			// 	del.addEventListener("click", event => {
+			// 		const newProps = JSON.parse(JSON.stringify(this.props));
+			// 		if (i > -1) {
+			// 			newProps.xAxes.splice(i, 1);
+			// 			newProps.values.splice(i, 1);
+			// 			newProps.points.splice(i, 1);
+			// 		}
+			// 		this.changeProps(newProps);
+			// 	});
+				
+			// 	fset.appendChild(del);
+			//  });
+			// Add Button
+			// const add = document.createElement("button");
+			// add.innerHTML = "add";
+			// add.style.padding = "3px 0px 3px 0px";
+			// add.style.margin = "15px 0px 5px 0px";
+			// add.addEventListener("click", event => {
+			// 	const newProps = JSON.parse(JSON.stringify(this.props));
+			// 	newProps.xAxes.push("");
+			// 	newProps.values.push([]);
+			// 	newProps.points.push([]);
+			// 	this.changeProps(newProps);
+			// });	
+
+			// fset.appendChild(add);	
 		}
 	}
 
