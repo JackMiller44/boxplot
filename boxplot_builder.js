@@ -37,10 +37,10 @@
 					detail: {
 						properties: {
 							chartTitle: this.chartTitle,
+							color: this.color,
 							isVertical: this.isVertical,
 							showsOutliers: this.showsOutliers,
 							showsArms: this.showsArms,
-							color: this.color,
 							xAxes: this.xAxes,
 							values: this.values,
 							points: this.points
@@ -74,7 +74,7 @@
 		}
 
 		get color() {
-			return this._shadowRoot.getElementById("backgroundColor").value;
+			return this.props.backgroundColor;
 		}
 
 		set isVertical(value) {
