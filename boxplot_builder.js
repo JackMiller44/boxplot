@@ -361,39 +361,55 @@
 
 			const flip = document.createElement("input");
 			flip.type = "button";
-			flip.value = "Flip Axes";
+			flip.value = "Orientation: Vertical";
 			flip.style.fontSize = "19px";
 			flip.style.padding = "3px 0px 3px 0px";
 			flip.style.margin = "20px 0px 3px 0px";
 			flip.addEventListener("click", event => {
 				const newProps = JSON.parse(JSON.stringify(this.props));
 				newProps.isVertical = !newProps.isVertical;
+				if(newProps.isVertical) {
+					flip.value = "Orientation: Vertical";
+				} else {
+					flip.value = "Orientation: Horizontal";
+				}
 				this.changeProps(newProps);
 			});
 			fset.appendChild(flip);
 
 			const out = document.createElement("input");
 			out.type = "button";
-			out.value = "Toggle Outliers";
+			out.value = "Outliers: Off";
 			out.style.fontSize = "19px";
 			out.style.padding = "3px 0px 3px 0px";
 			out.style.margin = "20px 0px 3px 0px";
 			out.addEventListener("click", event => {
 				const newProps = JSON.parse(JSON.stringify(this.props));
 				newProps.showsOutliers = !newProps.showsOutliers;
+				if(newProps.showsOutliers) {
+					out.value = "Outliers: On";
+				} else {
+					out.value = "Outliers: Off";
+				}
 				this.changeProps(newProps);
 			});
 			fset.appendChild(out);
 
 			const arms = document.createElement("input");
 			arms.type = "button";
-			arms.value = "Toggle Arms";
+			arms.value = "Arms: On";
 			arms.style.fontSize = "19px";
 			arms.style.padding = "3px 0px 3px 0px";
 			arms.style.margin = "20px 0px 3px 0px";
 			arms.addEventListener("click", event => {
+				
 				const newProps = JSON.parse(JSON.stringify(this.props));
 				newProps.showsArms = !newProps.showsArms;
+				if(newProps.showsArms) {
+					arms.value = "Arms: On";
+				} else {
+					arms.value = "Arms: Off";
+				}
 				this.changeProps(newProps);
 			});
 			fset.appendChild(arms);
