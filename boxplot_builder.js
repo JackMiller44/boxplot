@@ -411,7 +411,7 @@
 			});
 
 			const lblr = document.createElement("label");
-			lblr.innerHTML = "Reference Points for " + item;
+			lblr.innerHTML = "Reference Points: ";
 			lblr.style.padding = "15px 5px 2px 0px";
 
 			fset.appendChild(lblr);
