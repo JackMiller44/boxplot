@@ -2073,6 +2073,7 @@ $_=window.anychart;$_.$=$;$_._=_});
 		values = [];
 		outliers = false;
 		showArms = true;
+		boxColor = "#0077ff";
 		data = [];
 		points = [];
 		xAxes = ["Sample Data"];
@@ -2090,6 +2091,7 @@ $_=window.anychart;$_.$=$;$_._=_});
 			});
 			this._props = {
 				chartTitle: this.chartTitle,
+				boxColor: this.boxColor,
 				isVertical: true,
 				showsOutliers: this.outliers,
 				showsArms: this.showArms,
@@ -2204,7 +2206,9 @@ $_=window.anychart;$_.$=$;$_._=_});
 		onCustomWidgetAfterUpdate(changedProperties) {
 			console.log("onCustomWidgetAfterUpdate")
 			console.log("this._props prop = ", this._props);
-
+			if("boxColor" in changedProperties) {
+				this.boxColor = changedProperties.boxColor;
+			}
 			if("isVertical" in changedProperties) {
 				if(this.chart.isVertical() != changedProperties.isVertical) {
 					this.flipAxes();
@@ -2414,9 +2418,9 @@ $_=window.anychart;$_.$=$;$_._=_});
 		
 			//builds all boxplots first
 			this.series = this.chart.box(this.data); //box.data is a list of dictionaries
-			this.series.normal().fill("#0077ff", 0.6);
-			this.series.hovered().fill("#0077ff", 0.2);
-			this.series.selected().fill("#0077ff", 0.8);
+			this.series.normal().fill(boxColor, 0.6);
+			this.series.hovered().fill(boxColor, 0.2);
+			this.series.selected().fill(boxColor, 0.8);
 			this.series.normal().stroke("##0313fc", 1, "10 5", "round");
 			this.series.hovered().stroke("##0313fc", 2, "10 5", "round");
 			this.series.selected().stroke("##0313fc", 4, "10 5", "round");
