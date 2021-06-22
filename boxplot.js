@@ -2459,12 +2459,11 @@ $_=window.anychart;$_.$=$;$_._=_});
 		}
 
 		toggleArms() {
+			this.showArms = !this.showArms;
 			if(this.showArms) {
 				this.series.stemStroke({color:"#4680ac", thickness:1});
-				this.showArms = false;
 			} else {
 				this.series.stemStroke({thickness:0});
-				this.showArms = true;
 			}
 		}
 	}
