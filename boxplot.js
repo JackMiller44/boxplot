@@ -2428,7 +2428,7 @@ $_=window.anychart;$_.$=$;$_._=_});
 			//adds points corresponding to boxplots
 			//adds each subarray of points to arr
 			let arr = [];
-			for(let i = 0; i < this.points.length; i++) {
+			for(let i = 0; i < this.xAxes.length; i++) {
 				//takes the x of the corresponding boxplot so that they line up
 				arr.push({x: this.xAxes[i], low:0, q1:0, median:0, q3:0, high:0, outliers: this.points});
 			}
