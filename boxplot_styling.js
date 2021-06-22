@@ -6,8 +6,8 @@
 				<legend>Custom Widget Text</legend>
 				<table>
 					<tr>
-						<td>Text</td>
-						<td><input id="backgroundColor" type="string"></td>
+						<td>Box Plot Color:</td>
+						<td><input id="boxColor" type="color"></td>
 					</tr>
 				</table>
 			</fieldset>
@@ -27,18 +27,18 @@
 			this.dispatchEvent(new CustomEvent("propertiesChanged", {
 					detail: {
 						properties: {
-							backgroundColor: this.backgroundColor
+							boxColor: this.boxColor
 						}
 					}
 			}));
 		}
 
-		set backgroundColor(color) {
-			this._shadowRoot.getElementById("backgroundColor").value = color;
+		set boxColor(color) {
+			this._shadowRoot.getElementById("boxColor").value = color;
 		}
 
-		get backgroundColor() {
-			return this._shadowRoot.getElementById("backgroundColor").value;
+		get boxColor() {
+			return this._shadowRoot.getElementById("boxColor").value;
 		}
 	}
 
