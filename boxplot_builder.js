@@ -403,15 +403,15 @@
 			elr.type = "text";
 			elr.style.padding = "3px 0px 3px 3px";
 			elr.style.margin = "5px 0px 15px 0px";
-			elr.value = this.props.points[i];
+			elr.value = this.props.points;
 			elr.addEventListener("change", event => {
 				const newProps = JSON.parse(JSON.stringify(this.props));
-				newProps.points[i] = JSON.parse("[" + event.path[0].value + "]");
+				newProps.points = JSON.parse("[" + event.path[0].value + "]");
 				this.changeProps(newProps);
 			});
 
 			const lblr = document.createElement("label");
-			lblr.innerHTML = "Reference Points for " + item;
+			lblr.innerHTML = "Reference Points: ";
 			lblr.style.padding = "15px 5px 2px 0px";
 
 			fset.appendChild(lblr);
