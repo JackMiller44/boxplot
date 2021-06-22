@@ -53,14 +53,14 @@
 			this.dispatchEvent(new CustomEvent("propertiesChanged", {
 				detail: {
 					properties: {
-						chartTitle: this.chartTitle,
-						isVertical: this.isVertical,
-						showsOutliers: this.showsOutliers,
-						showsArms: this.showsArms,
-						color: this.color,
-						xAxes: this.xAxes,
-						values: this.values,
-						points: this.points
+						chartTitle: props.chartTitle,
+						color: props.color,
+						isVertical: props.isVertical,
+						showsOutliers: props.showsOutliers,
+						showsArms: props.showsArms,
+						xAxes: props.xAxes,
+						values: props.values,
+						points: props.points
 					}
 				}
 			}));
