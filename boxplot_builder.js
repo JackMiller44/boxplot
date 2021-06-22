@@ -37,10 +37,10 @@
 					detail: {
 						properties: {
 							chartTitle: this.chartTitle,
+							color: this.color,
 							isVertical: this.isVertical,
 							showsOutliers: this.showsOutliers,
 							showsArms: this.showsArms,
-							color: this.color,
 							xAxes: this.xAxes,
 							values: this.values,
 							points: this.points
@@ -53,14 +53,14 @@
 			this.dispatchEvent(new CustomEvent("propertiesChanged", {
 				detail: {
 					properties: {
-						chartTitle: this.chartTitle,
-						isVertical: this.isVertical,
-						showsOutliers: this.showsOutliers,
-						showsArms: this.showsArms,
-						color: this.color,
-						xAxes: this.xAxes,
-						values: this.values,
-						points: this.points
+						chartTitle: props.chartTitle,
+						color: props.color,
+						isVertical: props.isVertical,
+						showsOutliers: props.showsOutliers,
+						showsArms: props.showsArms,
+						xAxes: props.xAxes,
+						values: props.values,
+						points: props.points
 					}
 				}
 			}));
@@ -74,7 +74,7 @@
 		}
 
 		get color() {
-			return this._shadowRoot.getElementById("backgroundColor").value;
+			return this.props.backgroundColor;
 		}
 
 		set isVertical(value) {
@@ -361,7 +361,11 @@
 
 			const flip = document.createElement("input");
 			flip.type = "button";
-			flip.value = "Flip Axes";
+			if(this.props.isVertical) {
+				flip.value = "Orientation: Horizontal";
+			} else {
+				flip.value = "Orientation: Vertical";
+			}
 			flip.style.fontSize = "19px";
 			flip.style.padding = "3px 0px 3px 0px";
 			flip.style.margin = "20px 0px 3px 0px";
@@ -374,7 +378,11 @@
 
 			const out = document.createElement("input");
 			out.type = "button";
-			out.value = "Toggle Outliers";
+			if(this.props.showsOutliers) {
+				out.value = "Outliers: On";
+			} else {
+				out.value = "Outliers: Off";
+			}
 			out.style.fontSize = "19px";
 			out.style.padding = "3px 0px 3px 0px";
 			out.style.margin = "20px 0px 3px 0px";
@@ -387,7 +395,11 @@
 
 			const arms = document.createElement("input");
 			arms.type = "button";
-			arms.value = "Toggle Arms";
+			if(this.props.showsArms) {
+				arms.value = "Arms: On";
+			} else {
+				arms.value = "Arms: Off";
+			}
 			arms.style.fontSize = "19px";
 			arms.style.padding = "3px 0px 3px 0px";
 			arms.style.margin = "20px 0px 3px 0px";

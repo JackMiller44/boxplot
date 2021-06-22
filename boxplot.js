@@ -2164,10 +2164,10 @@ $_=window.anychart;$_.$=$;$_._=_});
 
 		onCustomWidgetBeforeUpdate(changedProperties) {
 			if(typeof this.outliers === "string") {
-				this.xAxes = JSON.parse(this.outliers)
+				this.outliers = JSON.parse(this.outliers)
 			}
 			if(typeof this.showArms === "string") {
-				this.xAxes = JSON.parse(this.showArms)
+				this.showArms = JSON.parse(this.showArms)
 			}
 			if(typeof this.xAxes === "string") {
 				this.xAxes = JSON.parse(this.xAxes)
@@ -2217,7 +2217,7 @@ $_=window.anychart;$_.$=$;$_._=_});
 			}
 			if("showsArms" in changedProperties) {
 				if(this.showArms != changedProperties.showsArms) {
-					this.toggleArms();
+					this.showArms = changedProperties.showsArms;
 				}
 			}
 			if("xAxes" in changedProperties) {
@@ -2280,7 +2280,7 @@ $_=window.anychart;$_.$=$;$_._=_});
 		}
 
 		set outliers(newval) {
-			this._oultliers = newval;
+			this.oultliers = newval;
 		}
 
 		get showArms() {
@@ -2288,7 +2288,7 @@ $_=window.anychart;$_.$=$;$_._=_});
 		}
 
 		set showArms(newval) {
-			this._showArms = newval;
+			this.showArms = newval;
 		}
 
 		//adds an additional boxplot on the current chart
@@ -2422,15 +2422,20 @@ $_=window.anychart;$_.$=$;$_._=_});
 			this.series.selected().stroke("##0313fc", 4, "10 5", "round");
 			this.series.whiskerWidth(5);
 			this.series.whiskerStroke({color: '#4680ac', thickness: 5});
+			if(this.showArms) {
+				this.series.stemStroke({color:"#4680ac", thickness:1});
+			} else {
+				this.series.stemStroke({thickness:0});
+			}
 		
 			this.series.xPointPosition(0.5);
 		
 			//adds points corresponding to boxplots
 			//adds each subarray of points to arr
 			let arr = [];
-			for(let i = 0; i < this.points.length; i++) {
+			for(let i = 0; i < this.xAxes.length; i++) {
 				//takes the x of the corresponding boxplot so that they line up
-				arr.push({x: this.xAxes[i], low:0, q1:0, median:0, q3:0, high:0, outliers: this.points[i]});
+				arr.push({x: this.xAxes[i], low:0, q1:0, median:0, q3:0, high:0, outliers: this.points});
 			}
 			//adds arr to the chart
 			this.series2 = this.chart.box(arr); //pts 1
@@ -2456,16 +2461,6 @@ $_=window.anychart;$_.$=$;$_._=_});
 				this.recalculate(i); // recalculate each dataset to (not) include outliers
 			}
 			this.rebuildPlot();
-		}
-
-		toggleArms() {
-			if(this.showArms) {
-				this.series.stemStroke({color:"#4680ac", thickness:1});
-				this.showArms = false;
-			} else {
-				this.series.stemStroke({thickness:0});
-				this.showArms = true;
-			}
 		}
 	}
 
