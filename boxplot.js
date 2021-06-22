@@ -2217,7 +2217,7 @@ $_=window.anychart;$_.$=$;$_._=_});
 			}
 			if("showsArms" in changedProperties) {
 				if(this.showArms != changedProperties.showsArms) {
-					this.toggleArms();
+					this.showArms = changedProperties.showsArms;
 				}
 			}
 			if("xAxes" in changedProperties) {
@@ -2422,6 +2422,11 @@ $_=window.anychart;$_.$=$;$_._=_});
 			this.series.selected().stroke("##0313fc", 4, "10 5", "round");
 			this.series.whiskerWidth(5);
 			this.series.whiskerStroke({color: '#4680ac', thickness: 5});
+			if(this.showArms) {
+				this.series.stemStroke({color:"#4680ac", thickness:1});
+			} else {
+				this.series.stemStroke({thickness:0});
+			}
 		
 			this.series.xPointPosition(0.5);
 		
@@ -2456,15 +2461,6 @@ $_=window.anychart;$_.$=$;$_._=_});
 				this.recalculate(i); // recalculate each dataset to (not) include outliers
 			}
 			this.rebuildPlot();
-		}
-
-		toggleArms() {
-			this.showArms = !this.showArms;
-			if(this.showArms) {
-				this.series.stemStroke({color:"#4680ac", thickness:1});
-			} else {
-				this.series.stemStroke({thickness:0});
-			}
 		}
 	}
 
