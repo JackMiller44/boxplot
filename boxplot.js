@@ -2164,10 +2164,10 @@ $_=window.anychart;$_.$=$;$_._=_});
 
 		onCustomWidgetBeforeUpdate(changedProperties) {
 			if(typeof this.outliers === "string") {
-				this.xAxes = JSON.parse(this.outliers)
+				this.outliers = JSON.parse(this.outliers)
 			}
 			if(typeof this.showArms === "string") {
-				this.xAxes = JSON.parse(this.showArms)
+				this.showArms = JSON.parse(this.showArms)
 			}
 			if(typeof this.xAxes === "string") {
 				this.xAxes = JSON.parse(this.xAxes)
