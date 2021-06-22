@@ -2113,7 +2113,7 @@ $_=window.anychart;$_.$=$;$_._=_});
 
 			// initiate drawing the chart
 			chart.draw();
-			this.recalculate(0);
+			
 			this.rebuildPlot();
 			// this.chart = chart;
 			// this.series; //variable for boxplots
