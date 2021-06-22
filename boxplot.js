@@ -2418,9 +2418,9 @@ $_=window.anychart;$_.$=$;$_._=_});
 		
 			//builds all boxplots first
 			this.series = this.chart.box(this.data); //box.data is a list of dictionaries
-			this.series.normal().fill(boxColor, 0.6);
-			this.series.hovered().fill(boxColor, 0.2);
-			this.series.selected().fill(boxColor, 0.8);
+			this.series.normal().fill(this.boxColor, 0.6);
+			this.series.hovered().fill(this.boxColor, 0.2);
+			this.series.selected().fill(this.boxColor, 0.8);
 			this.series.normal().stroke("##0313fc", 1, "10 5", "round");
 			this.series.hovered().stroke("##0313fc", 2, "10 5", "round");
 			this.series.selected().stroke("##0313fc", 4, "10 5", "round");
