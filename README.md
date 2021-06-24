@@ -57,8 +57,6 @@ This project is a custom widget for SAP Analytics Cloud. This widget will contai
 
     a. The color selector allows the user to change the color of the boxplots
 
-### In-Browser
-
 ## Build and Test
 In order to test this widget in your browser, do the following:
 1. Clone this respository
