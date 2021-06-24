@@ -59,5 +59,20 @@ This project is a custom widget for SAP Analytics Cloud. This widget will contai
 
 ## Build and Test
 In order to test this widget in your browser, do the following:
+
 1. Clone this respository
-2. Open the index.html file in your browser
+
+2. You may wish to host the files on your own cloud storage server. If you do, be sure to update boxplot.json with the appropriate links
+
+3. In SAP Analytics Cloud -> Analytics Applications, go to Add Custom Widget and select the boxplot.json file
+
+4. Create a new (or open existing) Analytics Application. Inside, insert the table of data you want to visualize with the boxplot widget, and the boxplot widget itself
+
+5. Insert the boxplot widget
+
+6. In Canvas -> fx -> onInitialization, paste the following code:
+        `var resultSet = Table_1.getDataSource().getResultSet();
+        console.log(resultSet);
+        boxplot_1.render(resultSet);`
+        
+7. Make whatever adjustments you want to the builder/styling panel, save changes, and Run Analytics Application
